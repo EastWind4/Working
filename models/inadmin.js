@@ -20,6 +20,9 @@ const volExcelSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  to:{
+    type: String,
+  }
 });
 
 const VolExcel = mongoose.model('VolInExcel', volExcelSchema);

@@ -2,7 +2,7 @@ const Excel = require("../models/inadmin.js");
 const User = require("../models/users.js");
 
 const createVolAdmin = async (req, res) => {
-  const { name, sheetData, filename } = req.body;
+  const { name, sheetData, filename, to } = req.body;
   const check = User.findOne({ name: name });
   if (!check) {
     res.status(400).json({
@@ -22,6 +22,7 @@ const createVolAdmin = async (req, res) => {
       email: check.email,
       sheetData,
       fileName: filename,
+      to,
     });
     await inAdmin.save();
     res.status(200).json({
@@ -35,7 +36,8 @@ const createVolAdmin = async (req, res) => {
 };
 
 const getAllVolAdmin = async (req, res) => {
-  const all = await Excel.find({});
+  const { to } = req.body;
+  const all = await Excel.find({to: to});
   res.status(200).json({
     message: "All Excel Fetched",
     excel: all,
