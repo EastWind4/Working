@@ -4,7 +4,7 @@ const {signUp, signUpVol} = require('../controllers/sinup');
 const router = express.Router();
 const auth = require('../middleware/auth_middleware');
 const multer = require('multer');
-const upload = multer({ dest: '' });
+const upload = multer({ dest: 'public/uploads' });
 // login route
 router.post('/', signUp);
 router.post('/vol/', upload.single('img'),signUpVol);
