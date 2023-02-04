@@ -3,30 +3,7 @@ import Button from '@mui/material/Button';
 import StudentDisplay from "../components/StudentDisplay";
 import * as XLSX from 'xlsx';
 
-const readExcel = (filex, setSheetData) => {
-    console.log(filex);
-    
-    if(filex) {
-        let fileReader = new FileReader();
-        fileReader.readAsBinaryString(filex);
-        fileReader.onload = async (event) => {
-            
-            let data = event.target.result;
-            let workbook = XLSX.read(data, {type:'binary'});
-            console.log(workbook); 
 
-            let sheetName = workbook.SheetNames[0];
-            let sheet = workbook.Sheets[sheetName];
-            console.log(sheet);
-
-            let rowObjects = XLSX.utils.sheet_to_row_object_array(sheet);
-            // rowObjects = Map(JSON.parse(rowObjects))
-            console.log(rowObjects);
-
-            setSheetData(rowObjects);
-        }
-    }
-}
 
 const renderStudentData = (studentData) => {
     if(studentData) {
@@ -40,7 +17,32 @@ const renderStudentData = (studentData) => {
     }
 }
 
-const SheetReader = () => {
+const SheetReader = (props) => {
+
+    const readExcel = (filex, setSheetData) => {
+        console.log(filex);
+        
+        if(filex) {
+            let fileReader = new FileReader();
+            fileReader.readAsBinaryString(filex);
+            fileReader.onload = async (event) => {
+                
+                let data = event.target.result;
+                let workbook = XLSX.read(data, {type:'binary'});
+                console.log(workbook); 
+    
+                let sheetName = workbook.SheetNames[0];
+                let sheet = workbook.Sheets[sheetName];
+                console.log(sheet);
+    
+                let rowObjects = XLSX.utils.sheet_to_row_object_array(sheet);
+                // rowObjects = Map(JSON.parse(rowObjects))
+                console.log(rowObjects);
+                props.submit(rowObjects)
+                setSheetData(rowObjects);
+            }
+        }
+    }
 
     const [sheetData, setSheetData] = useState(null);
     const [buttonLabel, setbuttonLabel] = useState("Upload Excel");

@@ -21,6 +21,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
+import  SheetReader from '../SheetReader';
+import Dashboard from '../Dashboard';
 
 
 function Admin() {
@@ -46,8 +48,25 @@ const handleDelete = async (row) => {
 }
 
 const handleDownload = async(row) => {
-    var sheet = XLSX.utils.aoa_to_sheet(row.sheetData)
+    var wb = XLSX.utils.book_new();
+
+    var sheet = XLSX.utils.json_to_sheet(row.sheetData);
+    XLSX.utils.book_append_sheet(wb, sheet, "Sheet1");
+    XLSX.writeFile(wb, row.fileName);
     console.log(sheet)
+}
+
+const handleUpload = async (sheetData) => {
+if(institute!='')
+{
+    const response = await axios.post(process.env.REACT_APP_API_URL+"/excel/insti/create/",{
+      name: institute,
+      sheetData,
+      to: "INSTITUTION"
+    })
+    console.log(response.data)
+}
+
 }
 
 React.useEffect(()=> {
@@ -65,7 +84,7 @@ React.useEffect(()=> {
   direction="row"
   justifyContent="flex-start"
   alignItems="flex-start"
-  sx={{marginTop:'20px',marginLeft:'20px',marginBottom:'20px'}}
+  sx={{marginTop:'20px',marginLeft:'20px',marginBottom:'30px'}}
   spacing={3}
 >
     <Grid item>
@@ -73,7 +92,7 @@ React.useEffect(()=> {
       <Table sx={{ maxWidth: 400 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{fontWeight:'bold'}}>File Name</TableCell>
+            <TableCell sx={{fontWeight:'bold'}}>File Name - Volunteer</TableCell>
             <TableCell align="right" sx={{fontWeight:'bold'}}>Download</TableCell>
             <TableCell align="right" sx={{fontWeight:'bold'}}>Delete</TableCell>
           </TableRow>
@@ -271,6 +290,33 @@ React.useEffect(()=> {
   </Card>
     </Grid>
     <Grid item>
+    <TableContainer component={Paper} elevation={3}>
+      <Table sx={{ maxWidth: 400 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{fontWeight:'bold'}}>File Name - Institute</TableCell>
+            <TableCell align="right" sx={{fontWeight:'bold'}}>Download</TableCell>
+            <TableCell align="right" sx={{fontWeight:'bold'}}>Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row._id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.fileName}
+              </TableCell>
+              <TableCell align="right">{<Button color="inherit" onClick={()=>{handleDownload(row)}}><FileDownloadIcon /></Button>}</TableCell>
+              <TableCell align="right">{<Button color="inherit" onClick={()=>{handleDelete(row)}}><DeleteIcon /></Button>}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </Grid>
+    <Grid item>
     <Card>
     <CardContent>
       <Grid
@@ -283,12 +329,14 @@ React.useEffect(()=> {
             color="textSecondary"
             gutterBottom
             variant="overline"
+            sx={{fontWeight:'bold'}}
           >
             UPLOAD EXCEL
           </Typography>
           <Typography
             color="textPrimary"
             // variant="h4"
+            sx={{fontWeight:'bold'}}
           >
             Choose institute
           </Typography>
@@ -323,15 +371,18 @@ React.useEffect(()=> {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>G D Somani</MenuItem>
-          <MenuItem value={20}>Pace</MenuItem>
-          <MenuItem value={30}>Allen</MenuItem>
+          <MenuItem value={"G D Somani"}>G D Somani</MenuItem>
+          <MenuItem value={"Pace"}>Pace</MenuItem>
+          <MenuItem value={"Allen"}>Allen</MenuItem>
         </Select>
+        <br />
+        <SheetReader submit={handleUpload}/>
       </FormControl>
       </Box>
     </CardContent>
   </Card>
     </Grid>
+    <Dashboard />
     </Grid>
   )
 }

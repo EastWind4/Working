@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import coin from "../images/coin.png";
 import CardRequest from "./CardRequest";
+import Dashboard from './Dashboard';
 
 function Profile() {
   const adjWidth = {
@@ -98,6 +99,7 @@ function Profile() {
         />
       </Grid>
       <br />
+      <Dashboard />
     </Grid>
   );
 }
