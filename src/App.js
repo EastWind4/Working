@@ -14,7 +14,7 @@ import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 import SheetReader from "./components/SheetReader";
 import Admin from "./components/admin/admin";
-
+import CertificateGenerator from "./components/CertificateGenerator";
 const App = () => {
   const { on } = useToggle();
   const theme = createTheme({
@@ -44,7 +44,7 @@ const App = () => {
         <Route exact path="/events" element={<Event />} />
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
-        <Route exact path="/claim" element={<CertGenButton />} />
+        <Route exact path="/claim" element={<CertificateGenerator />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </ThemeProvider>
