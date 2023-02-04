@@ -16,6 +16,8 @@ import CustomAlert from "./components/CustomAlert";
 import ReachUs from "./components/Login";
 import SheetReader from "./components/SheetReader";
 import Admin from "./components/admin/admin";
+import SignUp from "./components/SignUp";
+import CertGenButton from "./components/CertificateGenerator";
 
 const App = () => {
   const { on } = useToggle();
@@ -47,6 +49,7 @@ const App = () => {
         <Route exact path="/events" element={<Event />} />
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
+        <Route exact path="/certgen" element={<CertGenButton />} />
       </Routes>
     </ThemeProvider>
   );
