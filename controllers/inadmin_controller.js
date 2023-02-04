@@ -10,23 +10,12 @@ const createVolAdmin = async (req, res) => {
     });
     return;
   }
-  if (to === "INSTITUTION") {
-    if (check.type !== "ADMIN") {
-      res.status(400).json({
-        message: "User not an Admin",
-      });
-      return;
-    }
+  if(check.type!="INSTITUTION"){
+    res.status(400).json({
+      message: "User not an institution",
+    });
+    return;
   }
-  if (to === "ADMIN") {
-    if (check.type !== "INSTITUTION") {
-      res.status(400).json({
-        message: "User not an Institution",
-      });
-      return;
-    }
-  }
-  
   try {
     const inAdmin = await Excel.create({
       name,
