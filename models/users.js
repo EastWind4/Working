@@ -42,7 +42,11 @@ const userSchema = new mongoose.Schema(
         isActivated: {
             type: Boolean,
             default: false
-        }
+        },
+        hours: {
+            type: Number,
+            default: 0
+        },
     },
     { timestamps: true }
 );

@@ -18,6 +18,7 @@ cloudinary.config({
 const loginRoute = require('./routes/login_route');
 const signupRoute = require('./routes/signup_route');
 const uploadRoute = require('./routes/upload_route');
+const eventsRoute = require('./routes/event_route');
 // const authRoutes = require('./routes/auth.route');
 // const fileRoutes = require('./routes/file.route');
 // const userRoutes = require('./routes/user.route');
@@ -41,6 +42,7 @@ app.use(morgan('dev'));
 app.use('/api/login', loginRoute);
 app.use('/api/signup', signupRoute);
 app.use('/api/image', uploadRoute);
+app.use('/api/events', eventsRoute);
 // app.use('/api/upload', fileRoutes);
 // app.use('/api/user', userRoutes);
 // app.use('/api/friend', friendRoutes);

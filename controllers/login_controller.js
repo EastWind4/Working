@@ -33,7 +33,8 @@ const login = async (req, res) => {
       profilePic: user.profilePic,
       isActivated: user.isActivated,
       token,
-      expireDate
+      expireDate,
+      hours: user.hours,
     });
     return;
   }
@@ -46,6 +47,7 @@ const login = async (req, res) => {
     profilePic: user.profilePic,
     token,
     expireDate,
+    hours: user.hours,
   });
 };
 

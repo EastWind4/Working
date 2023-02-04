@@ -15,12 +15,12 @@ const signUp = async (req, res) => {
     res.status(409).json({ message: "Email already registered" });
     return;
   }
-  const newUser = new User({ password: hashedPassword, email, name, type });
+  const newUser = new User({ name: name, password: hashedPassword, email, type });
+  await newUser.save();
   try {
-    await newUser.save();
     sendOtp(newUser._id, newUser.email);
     const {token, expireDate} = await generateToken(newUser);
-    res.status(201).json({ email, name, isActivated: newUser.isActivated, token, expireDate });
+    res.status(201).json({ email, name, isActivated: newUser.isActivated, token, expireDate, hours: newUser.hours, type: newUser.type });
   }
   catch (error) {
     res.status(409).json({ message: error.message });
@@ -54,7 +54,7 @@ const signUpVol = async (req, res) => {
   try {
     sendOtp(newUser._id, newUser.email);
     const {token, expireDate} = await generateToken(newUser);
-    res.status(201).json({ email, name, isActivated: newUser.isActivated, token, expireDate, profilePic: secure_url });
+    res.status(201).json({ email, name, isActivated: newUser.isActivated, token, expireDate, profilePic: secure_url, hours: newUser.hours, type: newUser.type });
   }
   catch (error) {
     res.status(409).json({ message: error.message });
