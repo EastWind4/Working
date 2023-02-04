@@ -10,6 +10,7 @@ import { useState, useEffect, useRef, React } from "react";
 import { USER_REGEX, PWD_REGEX, EMAIL_REGEX } from "./Regex";
 import Signup from "../api/Signup";
 import { useAlert } from "../context/AlertProvider";
+import LinkedInPage from '../components/LinkedInSingUp'
 const Register = () => {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
@@ -253,6 +254,9 @@ const Register = () => {
             <Link to="/login">Log In</Link>
           </span>
         </p>
+        <div>
+          {LinkedInPage()}
+        </div>
       </section>
     </>
   );

@@ -10,6 +10,7 @@ import Landing from "./components/Landing";
 import TwoFactAuth from "./components/TwoFactAuth";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
         <Route exact path="signup" element={<Register />} />
         <Route exact path="/signup/2fa" element={<TwoFactAuth />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </ThemeProvider>
