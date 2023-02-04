@@ -50,9 +50,9 @@ a:visited {
   color: #fff;
 }
 
-input[type="text"],
-input[type="password"],
 input[type="email"],
+input[type="password"],
+input[type="text"],
 button,
 textarea {
   font-family: "Nunito", sans-serif;

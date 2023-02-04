@@ -1,11 +1,10 @@
 import axios from "axios";
 const apiurl = process.env.REACT_APP_API_URL;
-const SendOtp = async (userId, token) => {
-  console.log("hello", token);
+const SendOtp = async (email, token) => {
   try {
     const response = await axios.post(
       apiurl + "/signup/resend/",
-      { userId },
+      { email },
       {
         headers: {
           Authorization: `Bearer ${token}`,
