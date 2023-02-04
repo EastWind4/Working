@@ -10,16 +10,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useToggle } from "../context/ToggleButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
-import SchoolIcon from "@mui/icons-material/School";
-import logo from "./Yasham.png";
+import logo from "../images/logo.png";
 
-let pages = ["Events"];
+let pages = [""];
 
 function Appbar() {
   const { logout } = useAuth();
@@ -38,7 +36,7 @@ function Appbar() {
   const type = localStorage.getItem("type");
   if (type === "INSTITUTION" || type === "VOLUNTEER") {
     pages = ["Events", "Profile"];
-  } else {
+  } else if (type === "ADMIN") {
     pages = ["Events"];
   }
 

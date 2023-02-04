@@ -1,24 +1,14 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import coin from "./coin.png";
+import coin from "../images/coin.png";
 import CardRequest from "./CardRequest";
 
 function Profile() {
@@ -29,6 +19,7 @@ function Profile() {
     },
   };
   const hours = localStorage.getItem("hours");
+  const profilePic = localStorage.getItem("profilePic");
   return (
     <Grid
       container
@@ -46,7 +37,7 @@ function Profile() {
             avatar={
               <Avatar
                 // src={localStorage.getItem("url")}
-                src="https://res.cloudinary.com/dqpspujbg/image/upload/v1675519017/test/uploads/yashb%40gmail.com.jpg"
+                src={profilePic}
                 alt="profile picture"
                 imgProps={
                   {
