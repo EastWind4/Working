@@ -18,8 +18,8 @@ const createEvent = async (req, res) => {
     const { secure_url } = await cloudinary.uploader.upload(path, {
       public_id: "test/events/"+title,
     });
-    const pt=`uploads/${file.fieldname + '-' + file.originalname}`;
-    fs.unlinkSync(pt);
+    // const pt=`uploads/${file.fieldname + '-' + file.originalname}`;
+    // fs.unlinkSync(pt);
   try {
     const event = await Event.create({
       creatorEmail,
