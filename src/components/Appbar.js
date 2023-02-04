@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
+import Avatar from '@mui/material/Avatar';
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -15,7 +16,9 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
-const pages = ["About", "Pricing", "Services"];
+import SchoolIcon from '@mui/icons-material/School';
+
+const pages = ["Events", "Profile", "Services"];
 
 function Appbar() {
   const { logout } = useAuth();
@@ -34,7 +37,8 @@ function Appbar() {
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon
+          <Avatar alt="Remy Sharp" src="/logo yasham.svg" />
+            {/* <SchoolIcon
               sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
               onClick={() => navigate("/")}
             />
@@ -45,13 +49,13 @@ function Appbar() {
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".1rem",
                 textDecoration: "none",
                 color: "inherit",
               }}
             >
-              LOGO
-            </Button>
+              YASHAM
+            </Button> */}
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
