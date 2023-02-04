@@ -10,7 +10,7 @@ const createVolAdmin = async (req, res) => {
     });
     return;
   }
-  if (check.tyoe !== "INSTITUTION") {
+  if (check.type !== "INSTITUTION") {
     res.status(400).json({
       message: "User not an Institution",
     });
