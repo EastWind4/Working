@@ -20,10 +20,7 @@ const signupRoute = require('./routes/signup_route');
 const uploadRoute = require('./routes/upload_route');
 const eventsRoute = require('./routes/event_route');
 const ExcelRoute = require('./routes/excel_route');
-// const authRoutes = require('./routes/auth.route');
-// const fileRoutes = require('./routes/file.route');
-// const userRoutes = require('./routes/user.route');
-// const friendRoutes = require('./routes/friend.route');
+const InstiExcelRoute = require('./routes/insti_excel_route');
 
 // Initializing an express app
 const app = express();
@@ -45,6 +42,8 @@ app.use('/api/signup', signupRoute);
 app.use('/api/image', uploadRoute);
 app.use('/api/events', eventsRoute);
 app.use('/api/excel/vol', ExcelRoute);
+app.use('/api/excel/insti', InstiExcelRoute);
+
 // app.use('/api/upload', fileRoutes);
 // app.use('/api/user', userRoutes);
 // app.use('/api/friend', friendRoutes);
