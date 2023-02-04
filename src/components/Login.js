@@ -7,12 +7,13 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import logo from "../images/logo.svg";
 import img from "../images/Signin.jpg";
-import "../css/Register.css";
+// import "../css/Register.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useRef, useState, useEffect } from "react";
 import { useAlert } from "../context/AlertProvider";
 import { VerifyLogin } from "../api/VerifyLogin";
+import TextField from "@mui/material/TextField";
 export default function Login() {
   const { login } = useAuth();
   const { showAlert } = useAlert();
@@ -62,7 +63,7 @@ export default function Login() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
         <Box
           sx={{
-            my: 10,
+            my: 14,
             mx: 4,
             display: "flex",
             flexDirection: "column",
@@ -83,34 +84,37 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <input
-              required
-              id="email"
-              type="email"
-              ref={emailRef}
-              autoComplete="email"
-              autoFocus
-              placeholder="Email Address"
-              style={{ marginTop: "15px" }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              required
-              type="password"
-              id="password"
-              placeholder="Password"
-              autoComplete="current-password"
-              style={{ marginTop: "15px" }}
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-            />
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="off"
+                  required
+                  ref={emailRef}
+                  fullWidth
+                  id="name"
+                  type="email"
+                  label="Email"
+                  autoFocus
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="password"
+                  label="Password"
+                  type="password"
+                  fullWidth
+                  autoComplete="new-password"
+                  placeholder="Password"
+                  value={pwd}
+                  onChange={(e) => setPwd(e.target.value)}
+                />
+              </Grid>
+            </Grid>
 
             <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In

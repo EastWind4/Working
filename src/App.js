@@ -4,17 +4,17 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { useToggle } from "./context/ToggleButton";
-import Register from "./components/Register";
 import Appbar from "./components/Appbar";
 import Landing from "./components/Landing";
 import TwoFactAuth from "./components/TwoFactAuth";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Dashboard from "./components/Dashboard";
-import Event from "./components/events"
+import Event from "./components/events";
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 import ReachUs from "./components/Login";
+import SignUp from "./components/SignUp";
 const App = () => {
   const { on } = useToggle();
   const theme = createTheme({
@@ -38,7 +38,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing />}></Route>
         <Route path="login" element={<Login />} />
-        <Route exact path="signup" element={<Register />} />
+        <Route exact path="signup" element={<SignUp />} />
         <Route exact path="/signup/2fa" element={<TwoFactAuth />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />

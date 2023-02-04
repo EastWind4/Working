@@ -1,27 +1,17 @@
 import axios from "axios";
 const apiurl = process.env.REACT_APP_API_URL;
-export const Signup = async (name, password, email, type, img) => {
-  // const data = {
-  //   password: password,
-  //   name: name,
-  //   email: email,
-  //   type: type,
-  //   img: img,
-  // };
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("password", password);
-  formData.append("email", email);
-  formData.append("type", type);
-  formData.append("img", img);
-  console.log(password, name, email, type, img);
+export const InstSignup = async (name, password, email, type) => {
+  const data = {
+    name: name,
+    password: password,
+    email: email,
+    type: type,
+  };
+
   try {
-    const response = await axios.post(apiurl + "/signup/vol/", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(apiurl + "/signup/", data);
     if (response.data) {
+      console.log(response.data);
       const token = response.data.token;
       localStorage.setItem("token", token);
       const expToken = response.data.expireDate;
@@ -45,4 +35,4 @@ export const Signup = async (name, password, email, type, img) => {
   }
 };
 
-export default Signup;
+export default InstSignup;
