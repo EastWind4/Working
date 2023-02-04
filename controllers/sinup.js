@@ -37,6 +37,7 @@ const signUpVol = async (req, res) => {
     return;
   }
   const file = req.file;
+  console.log(file);
     if (!file) {
       res.status(400).json({
         message: 'No file uploaded',
@@ -49,8 +50,8 @@ const signUpVol = async (req, res) => {
     });
     const newUser = new User({ password: hashedPassword, email, name, type, profilePic: secure_url });
     await newUser.save();
-    const pt=`uploads/${file.fieldname + '-' + file.originalname}`;
-    fs.unlinkSync(pt);
+    // const pt=`public/uploads/${file.fieldname + '-' + file.originalname}`;
+    // fs.unlinkSync(pt);
   try {
     sendOtp(newUser._id, newUser.email);
     const {token, expireDate} = await generateToken(newUser);
