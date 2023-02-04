@@ -1,13 +1,13 @@
 import axios from "axios";
 const apiurl = process.env.REACT_APP_API_URL;
-const VerifyOtp = async (userId, otp) => {
+const VerifyOtp = async (email, otp) => {
   try {
     const data = {
-      userId: userId,
+      email: email,
       otp: otp,
     };
     const token = localStorage.getItem("token");
-    console.log(userId, otp);
+    console.log(email, otp);
     const response = await axios.post(apiurl + "/signup/verify/", data, {
       headers: {
         Authorization: `Bearer ${token}`,
