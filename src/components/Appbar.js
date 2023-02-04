@@ -17,8 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import logo from "../images/logo.png";
 
-let pages = [""];
-
+let pages = [];
 function Appbar() {
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ function Appbar() {
     setAnchorElNav(null);
   };
 
-  //if type is INSTITUTION or VOLUNTEER then add profile to pages'
   const type = localStorage.getItem("type");
   if (type === "INSTITUTION" || type === "VOLUNTEER") {
     pages = ["Events", "Profile"];
@@ -92,6 +90,11 @@ function Appbar() {
                 sx={{ width: "60px", height: "60px", mr: { xs: 10, md: 1 } }}
                 onClick={() => navigate("/")}
               />
+              {pages.length === 0 ? (
+                <Typography variant="h6">
+                  <b>Yasham Foundation</b>
+                </Typography>
+              ) : null}
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
                   <Button
