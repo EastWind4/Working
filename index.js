@@ -21,6 +21,7 @@ const uploadRoute = require('./routes/upload_route');
 const eventsRoute = require('./routes/event_route');
 const ExcelRoute = require('./routes/excel_route');
 const InstiExcelRoute = require('./routes/insti_excel_route');
+const qrRoute = require('./routes/qr_route');
 
 // Initializing an express app
 const app = express();
@@ -43,6 +44,8 @@ app.use('/api/image', uploadRoute);
 app.use('/api/events', eventsRoute);
 app.use('/api/excel/vol', ExcelRoute);
 app.use('/api/excel/insti', InstiExcelRoute);
+app.use('/api/qr', qrRoute);
+
 
 // app.use('/api/upload', fileRoutes);
 // app.use('/api/user', userRoutes);
