@@ -42,11 +42,11 @@ const App = () => {
         <Route exact path="signup" element={<SignUp />} />
         <Route exact path="/signup/2fa" element={<TwoFactAuth />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
         <Route exact path="/events" element={<Event />} />
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
-        <Route exact path="/certgen" element={<CertGenButton />} />
+        <Route exact path="/claim" element={<CertGenButton />} />
+        <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </ThemeProvider>
   );

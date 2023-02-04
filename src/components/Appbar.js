@@ -35,7 +35,7 @@ function Appbar() {
   if (type === "INSTITUTION" || type === "VOLUNTEER") {
     pages = ["Events", "Profile"];
   } else if (type === "ADMIN") {
-    pages = ["Events"];
+    pages = [];
   }
 
   return (
