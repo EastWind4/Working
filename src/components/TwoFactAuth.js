@@ -1,9 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import SendOtp from "../api/SendOtp";
 import VerifyOtp from "../api/VerifyOtp";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useAlert } from "../context/AlertProvider";
 import { useEffect, useState } from "react";
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+
+
 function TwoFactAuth() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
@@ -78,40 +84,56 @@ function TwoFactAuth() {
   }, [time]);
   return (
     <div>
-      <h1>Verify Otp</h1>
-      <p>Enter the code sent to your {email1}</p>
-      <input type="text" maxLength="1" />
-      <input type="text" disabled maxLength="1" />
-      <input type="text" disabled maxLength="1" />
-      <input type="text" disabled maxLength="1" />
-      <input type="text" disabled maxLength="1" />
-      <input type="text" disabled maxLength="1" />
+      
+<Grid
+  container
+  direction="row"
+  justifyContent="center"
+  alignItems="center"
+>
+      <Card sx={{minWidth: 400, marginTop:'50px'}} elevation={5}>
+      <Typography variant="h4" sx={{fontWeight:'bold', marginTop:'20PX',display:'flex', justifyContent:'center'}}>Verify Otp</Typography>
+      <br />
+      <p style={{display:'flex', justifyContent:'center'}}>Enter the code sent to your {email1}</p>
+      <input type="text" maxLength="1" style={{width:"40px", marginX:"50px", marginLeft:"90px"}}/>
+      <input type="text" disabled maxLength="1" style={{width:"40px", marginX:"50px"}}/>
+      <input type="text" disabled maxLength="1" style={{width:"40px", marginX:"50px"}}/>
+      <input type="text" disabled maxLength="1" style={{width:"40px", marginX:"50px"}}/>
+      <input type="text" disabled maxLength="1" style={{width:"40px", marginX:"50px"}}/>
+      <input type="text" disabled maxLength="1" style={{width:"40px", marginX:"50px"}}/>
+      <br />
+      <br />
       <Button
         type="submit"
         color="inherit"
-        variant="outlined"
+        variant="contained"
         onClick={verifyOtp}
-        sx={style}
+        sx={{marginLeft:'100px', marginBottom:'30px'}}
       >
         Submit
       </Button>
 
       {time > 0 && (
+        <Typography sx={{marginLeft:'100px'}}>
         <p>
           Didn't receive the code? <br />
           Resend code in <span>{time} seconds</span>{" "}
         </p>
+        </Typography>
       )}
       {time === 0 && (
         <Button
           onClick={handleOtp}
           color="inherit"
-          variant="outlined"
-          sx={style}
+          variant="contained"
+          sx={{marginLeft:'10px', marginBottom:'30px'}}
         >
           Resend OTP
         </Button>
       )}
+      
+      </Card>
+      </Grid>
     </div>
   );
 }

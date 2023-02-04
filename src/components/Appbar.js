@@ -17,8 +17,9 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import SchoolIcon from '@mui/icons-material/School';
+import logo from './Yasham.png';
 
-const pages = ["Events", "Profile", "Services"];
+const pages = ["Events", "Profile"];
 
 function Appbar() {
   const { logout } = useAuth();
@@ -35,28 +36,19 @@ function Appbar() {
   return (
     <>
       <AppBar position="sticky">
+      <Toolbar>
+        <Box
+            component="img"
+            sx={{
+            height: 56,
+            width: 56
+            }}
+            alt="Your logo."
+            src={logo}
+        />
+    
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-          <Avatar alt="Remy Sharp" src="/logo yasham.svg" />
-            {/* <SchoolIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-              onClick={() => navigate("/")}
-            />
-            <Button
-              onClick={() => navigate("/")}
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".1rem",
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              YASHAM
-            </Button> */}
-
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -155,6 +147,7 @@ function Appbar() {
             </Button>
           </Toolbar>
         </Container>
+        </Toolbar>
       </AppBar>
     </>
   );
