@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import certificate from "../cert_templates/Volunteer Certificate.png";
 import {
   exportComponentAsJPEG,

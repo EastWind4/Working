@@ -27,10 +27,8 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email1, success, token, expToken, isActivated } = await VerifyLogin(
-      email,
-      pwd
-    );
+    const { email1, success, token, expToken, isActivated, name, type } =
+      await VerifyLogin(email, pwd);
     if (success === true) {
       if (isActivated === false) {
         console.log("not activated");
@@ -38,7 +36,8 @@ export default function Login() {
       } else {
         console.log("activated");
         login(email1, token, expToken);
-        navigate("/profile");
+        if (type === "ADMIN") navigate("/admin");
+        else navigate("/profile");
       }
     } else {
       showAlert("error", "Invalid username or password");
@@ -90,7 +89,7 @@ export default function Login() {
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="off"
+                  autoComplete="email"
                   required
                   ref={emailRef}
                   fullWidth
@@ -110,7 +109,7 @@ export default function Login() {
                   label="Password"
                   type="password"
                   fullWidth
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                   placeholder="Password"
                   value={pwd}
                   onChange={(e) => setPwd(e.target.value)}

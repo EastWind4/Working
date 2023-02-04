@@ -12,7 +12,9 @@ import coin from "../images/coin.png";
 import CardRequest from "./CardRequest";
 import Dashboard from './Dashboard';
 
+import { useNavigate } from "react-router-dom";
 function Profile() {
+  const navigate = useNavigate();
   const adjWidth = {
     width: "800px",
     "@media (max-width:600px)": {
@@ -83,7 +85,10 @@ function Profile() {
           <Button
             variant="contained"
             sx={{ marginLeft: "35%", marginTop: "15px" }}
-            disabled={hours % 5 === 0 ? false : true}
+            disabled={hours % 5 === 0 && hours !== "0" ? false : true}
+            onClick={() => {
+              navigate("/claim");
+            }}
           >
             Claim
           </Button>

@@ -29,7 +29,7 @@ export const VerifyLogin = async (email, password) => {
         token: response.data.token,
         expToken: response.data.expireDate,
         isActivated: response.data.isActivated,
-        naam: response.data.name,
+        name: response.data.name,
         type: response.data.type,
       };
     } else {
