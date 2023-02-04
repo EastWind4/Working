@@ -2,11 +2,8 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,7 +23,8 @@ import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Stack from "@mui/material/Stack";
 import InstSignup from "../api/InstSignup";
-
+import logo from "../images/logo.svg";
+import image from "../images/Signin.jpg";
 export default function SignUp() {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
@@ -53,7 +51,6 @@ export default function SignUp() {
   const [matchFocus, setMatchFocus] = useState(false);
   const [img, setImg] = useState(null);
   const [upload, setUpload] = useState(false);
-  const [validImg, setValidImg] = useState(false);
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -78,15 +75,9 @@ export default function SignUp() {
         img === null
     );
     if (validPwd && validMatch && validEmail && img !== null) {
-      const { email1, name1, bool } = await Signup(
-        name,
-        password,
-        email,
-        type,
-        img
-      );
+      const { bool } = await Signup(name, password, email, type, img);
       if (bool === true) {
-        navigate("/signup/2fa", { state: { email1 } });
+        navigate("/signup/2fa");
       } else {
         showAlert("error", "User already exists");
       }
@@ -97,14 +88,9 @@ export default function SignUp() {
       type === "INSTITUTION" &&
       img === null
     ) {
-      const { email1, name1, bool } = await InstSignup(
-        name,
-        password,
-        email,
-        type
-      );
+      const { bool } = await InstSignup(name, password, email, type);
       if (bool === true) {
-        navigate("/signup/2fa", { state: { email1 } });
+        navigate("/signup/2fa");
       } else {
         showAlert("error", "User already exists");
       }
@@ -122,9 +108,33 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1 }}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${image})`,
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <Avatar
+          src={logo}
+          alt="logo"
+          sx={{
+            width: "50%",
+            height: "50%",
+            marginTop: "-90px",
+            sm: { width: "100%", height: "100%" },
+            marginBottom: "-60px",
+          }}
+        />
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
@@ -209,6 +219,7 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
+                  fullWidth
                   placeholder="Password"
                   autoComplete="new-password"
                   value={password}
@@ -248,6 +259,7 @@ export default function SignUp() {
                 <TextField
                   required
                   name="confirmPassword"
+                  fullWidth
                   label="Confirm Password"
                   type="password"
                   id="confirmPassword"

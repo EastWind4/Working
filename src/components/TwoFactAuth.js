@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SendOtp from "../api/SendOtp";
 import VerifyOtp from "../api/VerifyOtp";
 import { Button, Typography } from "@mui/material";
@@ -10,8 +10,6 @@ import Card from "@mui/material/Card";
 function TwoFactAuth() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
-  const location = useLocation();
-  // const { email1 } = location.state;
   const email1 = localStorage.getItem("email");
   const token = localStorage.getItem("token");
   const handleOtp = async () => {

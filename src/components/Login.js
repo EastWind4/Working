@@ -27,8 +27,10 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email1, success, token, expToken, isActivated, naam, type } =
-      await VerifyLogin(email, pwd);
+    const { email1, success, token, expToken, isActivated } = await VerifyLogin(
+      email,
+      pwd
+    );
     if (success === true) {
       if (isActivated === false) {
         console.log("not activated");
@@ -116,7 +118,12 @@ export default function Login() {
               </Grid>
             </Grid>
 
-            <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              fullWidth
+            >
               Sign In
             </Button>
             <Grid container>

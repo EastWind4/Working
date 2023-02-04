@@ -9,12 +9,11 @@ import TwoFactAuth from "./components/TwoFactAuth";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SignUp from "./components/SignUp";
-import Event from "./components/events";
+import Event from "./components/Events";
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 import SheetReader from "./components/SheetReader";
 import Admin from "./components/admin/admin";
-import Institute from "./components/institute/Institute";
 
 const App = () => {
   const { on } = useToggle();
@@ -46,7 +45,6 @@ const App = () => {
         <Route exact path="/events" element={<Event />} />
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
-        <Route exact path="/institute" element={<Institute/>} />
       </Routes>
     </ThemeProvider>
   );

@@ -7,11 +7,10 @@ export const VerifyLogin = async (email, password) => {
   };
   try {
     const response = await axios.post(apiurl + "/login/", data);
-    console.log(response.data);
-
     if (response.data) {
-      const user = response.data.name;
-      localStorage.setItem("user", user);
+      console.log(response.data);
+      const name = response.data.name;
+      localStorage.setItem("name", name);
       const token = response.data.token;
       localStorage.setItem("token", token);
       const expToken = response.data.expireDate;
@@ -23,6 +22,7 @@ export const VerifyLogin = async (email, password) => {
       localStorage.setItem("profilePic", response.data.profilePic);
       const hours = response.data.hours;
       localStorage.setItem("hours", hours);
+      console.log(localStorage);
       return {
         email: response.data.email,
         success: true,
@@ -33,7 +33,7 @@ export const VerifyLogin = async (email, password) => {
         type: response.data.type,
       };
     } else {
-      console.log(response);
+      console.log("false");
       return false;
     }
   } catch (err) {
