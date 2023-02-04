@@ -10,12 +10,23 @@ const createVolAdmin = async (req, res) => {
     });
     return;
   }
-  if (check.type !== "INSTITUTION") {
-    res.status(400).json({
-      message: "User not an Institution",
-    });
-    return;
+  if (to === "INSTITUTION") {
+    if (check.type !== "ADMIN") {
+      res.status(400).json({
+        message: "User not an Admin",
+      });
+      return;
+    }
   }
+  if (to === "ADMIN") {
+    if (check.type !== "INSTITUTION") {
+      res.status(400).json({
+        message: "User not an Institution",
+      });
+      return;
+    }
+  }
+  
   try {
     const inAdmin = await Excel.create({
       name,
@@ -37,12 +48,12 @@ const createVolAdmin = async (req, res) => {
 
 const getAllVolAdmin = async (req, res) => {
   const { to } = req.body;
-  const all = await Excel.find({to: to});
+  const all = await Excel.find({ to: to });
   res.status(200).json({
     message: "All Excel Fetched",
     excel: all,
   });
-}
+};
 
 const deleteVolAdmin = async (req, res) => {
   const { id } = req.body;
@@ -56,7 +67,7 @@ const deleteVolAdmin = async (req, res) => {
       message: error.message,
     });
   }
-}
+};
 
 module.exports = {
   createVolAdmin,
