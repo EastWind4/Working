@@ -14,6 +14,7 @@ import Dashboard from "./components/Dashboard";
 import Event from "./components/events"
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
+import ReachUs from "./components/Login";
 const App = () => {
   const { on } = useToggle();
   const theme = createTheme({
@@ -40,7 +41,6 @@ const App = () => {
         <Route exact path="signup" element={<Register />} />
         <Route exact path="/signup/2fa" element={<TwoFactAuth />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="*" element={<h1>404 Not Found</h1>} />
         <Route exact path="/events" element={<Event />} />
       </Routes>

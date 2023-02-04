@@ -8,12 +8,11 @@ function TwoFactAuth() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
   const location = useLocation();
-  // const { userId, email1 } = location.state;
-  const userId = "user";
-  const email1 = "";
+  const { email1 } = location.state;
   const token = localStorage.getItem("token");
   const handleOtp = async () => {
-    const otp = await SendOtp(userId, token);
+    const email = localStorage.getItem("email");
+    const otp = await SendOtp(email, token);
     setTime(60);
     if (otp) {
       showAlert("success", "OTP sent successfully!");
@@ -28,7 +27,8 @@ function TwoFactAuth() {
     verifyOtp.forEach((otp1) => {
       otp += otp1.value;
     });
-    const success = await VerifyOtp(userId, otp, token);
+    const email = localStorage.getItem("email");
+    const success = await VerifyOtp(email, otp, token);
     if (success === true) {
       console.log("otp verified");
       navigate("/profile");
@@ -47,8 +47,14 @@ function TwoFactAuth() {
         e.target.nextElementSibling.focus();
       } else if (e.key === "Backspace") {
         if (e.target.previousElementSibling) {
-          e.target.disabled = true;
-          e.target.previousElementSibling.focus();
+          if (e.target.previousElementSibling.value.length === 1) {
+            e.target.previousElementSibling.focus();
+            e.target.disabled = true;
+          } else if (e.target.previousElementSibling === null) {
+            console.log("error");
+          } else {
+            e.target.previousElementSibling.previousElementSibling.focus();
+          }
         }
       }
     });
@@ -74,12 +80,12 @@ function TwoFactAuth() {
     <div>
       <h1>Verify Otp</h1>
       <p>Enter the code sent to your {email1}</p>
-      <input type="number" />
-      <input type="number" disabled />
-      <input type="number" disabled />
-      <input type="number" disabled />
-      <input type="number" disabled />
-      <input type="number" disabled />
+      <input type="text" maxLength="1" />
+      <input type="text" disabled maxLength="1" />
+      <input type="text" disabled maxLength="1" />
+      <input type="text" disabled maxLength="1" />
+      <input type="text" disabled maxLength="1" />
+      <input type="text" disabled maxLength="1" />
       <Button
         type="submit"
         color="inherit"
@@ -89,26 +95,6 @@ function TwoFactAuth() {
       >
         Submit
       </Button>
-
-      {/* <input
-        type="number"
-        id="Third"
-        maxLength="1"
-        onKeyUp={clickEvent(this, "Fourth")}
-      />
-      <input
-        type="number"
-        id="Fourth"
-        maxLength="1"
-        onKeyUp={clickEvent(this, "Fifth")}
-      />
-      <input
-        type="number"
-        id="Fifth"
-        maxLength="1"
-        onKeyUp={clickEvent(this, "Sixth")}
-      />
-      <input type="number" id="Sixth" maxLength="1" /> */}
 
       {time > 0 && (
         <p>
