@@ -1,56 +1,35 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
-function Profile() {
-  const navigate = useNavigate();
-  const { login, logout } = useAuth();
-  const remainingTime =
-    new Date(localStorage.getItem("expToken")).getTime() - new Date().getTime();
-  // const data = {
-  //   id: "63dd31f19d24926feb061bee",
-  //   username: "yb261",
-  //   email: "yashbrahmbhatt261@gmail.com",
-  //   name: "vash",
-  //   isActivated: false,
-  //   token:
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGQzMWYxOWQyNDkyNmZlYjA2MWJlZSIsIm5hbWUiOiJ2YXNoIiwidXNlcm5hbWUiOiJ5YjI2MSIsImVtYWlsIjoieWFzaGJyYWhtYmhhdHQyNjFAZ21haWwuY29tIiwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE2NzU0NDA2MjV9.RpXShU5DlHTX46S9m1yDEmBO6wlScqE-MXP6IB8RoNk",
-  //   expireDate: "2023-02-04T16:10:25.571Z",
-  // };
-  // localStorage.setItem("user", data.username);
-  // localStorage.setItem("token", data.token);
-  // localStorage.setItem("expToken", data.expireDate);
-  // localStorage.setItem("isActivated", data.isActivated);
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    const exptoken = localStorage.getItem("expToken");
-    localStorage.setItem("isActivated", "true");
-    const isActivated = localStorage.getItem("isActivated");
-    if (
-      user &&
-      token &&
-      new Date(exptoken) > new Date() &&
-      isActivated === "true"
-    ) {
-      login(user, token, exptoken);
-    } else {
-      logout();
-      navigate("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      logout();
-      navigate("/login");
-    }, remainingTime);
-    return () => {
-      clearTimeout(timer);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remainingTime]);
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
-  return <div>Welcome {localStorage.getItem("user")}</div>;
+
+function Profile() {
+  return (
+    
+<Grid
+  container
+  direction="row"
+  justifyContent="flex-start"
+  alignItems="center"
+>
+</Grid>
+  )
 }
 
-export default Profile;
+export default Profile

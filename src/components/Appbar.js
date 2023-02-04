@@ -37,7 +37,7 @@ function Appbar() {
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-          <Avatar alt="Remy Sharp" src="/logo yasham.svg" />
+          
             {/* <SchoolIcon
               sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
               onClick={() => navigate("/")}
