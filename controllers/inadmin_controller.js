@@ -3,16 +3,10 @@ const User = require("../models/users.js");
 
 const createVolAdmin = async (req, res) => {
   const { name, sheetData, filename, to } = req.body;
-  const check = User.findOne({ name: name });
+  const check = await User.findOne({ name: name, type: "INSTITUTION"})
   if (!check) {
     res.status(400).json({
       message: "User not found",
-    });
-    return;
-  }
-  if(check.type!="INSTITUTION"){
-    res.status(400).json({
-      message: "User not an institution",
     });
     return;
   }
