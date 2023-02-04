@@ -1,23 +1,22 @@
-const Event = require('../models/events');  
-const cloudinary = require('cloudinary').v2;
-const fs = require('fs');
-const Participate = require('../models/participate');
-const User = require('../models/users');
-
+const Event = require("../models/events");
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
+const Participate = require("../models/participate");
+const User = require("../models/users");
 
 const createEvent = async (req, res) => {
-  const {creatorEmail, title, description, date, location} = req.body;
+  const { creatorEmail, title, description, date, location } = req.body;
   const file = req.file;
-    if (!file) {
-      res.status(400).json({
-        message: 'No file uploaded',
-      });
-      return;
-    }
-    const { path } = file;
-    const { secure_url } = await cloudinary.uploader.upload(path, {
-      public_id: "test/events/"+title,
+  if (!file) {
+    res.status(400).json({
+      message: "No file uploaded",
     });
+    return;
+  }
+  const { path } = file;
+  const { secure_url } = await cloudinary.uploader.upload(path, {
+    public_id: "test/events/" + title,
+  });
   try {
     const event = await Event.create({
       creatorEmail,
@@ -29,9 +28,9 @@ const createEvent = async (req, res) => {
     });
     event.save();
     res.status(200).json({
-      message: 'Event created',
-      event
-    }); 
+      message: "Event created",
+      event,
+    });
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -39,78 +38,84 @@ const createEvent = async (req, res) => {
   }
 };
 
-
 const getAllEvents = async (req, res) => {
   try {
     const events = await Event.find();
     res.status(200).json({
-      message: 'Events fetched',
-      events
+      message: "Events fetched",
+      events,
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
+};
 
 const getEventsByCreatorEmail = async (req, res) => {
-  const {email} = req.body;
+  const { email } = req.body;
   try {
-    const events = await Event.find({creatorEmail: email});
+    const events = await Event.find({ creatorEmail: email });
     res.status(200).json({
-      message: 'Events fetched',
-      events
+      message: "Events fetched",
+      events,
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
+};
 
 const deleteEvent = async (req, res) => {
-  const {id} = req.body;
+  const { id } = req.body;
   try {
     const event = await Event.findById(id);
     await cloudinary.uploader.destroy(event.eventImage);
     await Event.findByIdAndDelete(id);
-    await Participate.deleteMany({eventId: id});
+    await Participate.deleteMany({ eventId: id });
     res.status(200).json({
-      message: 'Event deleted',
+      message: "Event deleted",
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
+};
 
 const applyForEvent = async (req, res) => {
-  const {email, eventId, creatorEmail, name, title} = req.body;
+  const { email, eventId, creatorEmail, name, title } = req.body;
+  const check = await Participate.find({ userEmail: email, eventId: eventId });
+  if (check.length > 0) {
+    res.status(400).json({
+      message: "Already applied for event",
+    });
+    return;
+  }
   try {
     const apply = await Participate.create({
       eventId,
       eventTitle: title,
       userEmail: email,
       creatorEmail,
-      userName: name
+      userName: name,
     });
     apply.save();
     res.status(200).json({
-      message: 'Applied for event'
+      message: "Applied for event",
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
-  } 
-}
+  }
+};
 
 const getApplicants = async (req, res) => {
-  const {eventId} = req.body;
+  const { eventId } = req.body;
   try {
-    const people = await Participate.find({eventId});
+    const people = await Participate.find({ eventId });
     let applicants = [];
     for (let i = 0; i < people.length; i++) {
       if (people[i].isRejected === false && people[i].isAccepted === false) {
@@ -118,70 +123,77 @@ const getApplicants = async (req, res) => {
       }
     }
     res.status(200).json({
-      message: 'Applicants fetched',
-      applicants: applicants
+      message: "Applicants fetched",
+      applicants: applicants,
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
+};
 
 const acceptApplicant = async (req, res) => {
-  const {eventId, userEmail, hours} = req.body;
+  const { eventId, userEmail, hours } = req.body;
   try {
-    const event = await Event.findOne({_id: eventId});
+    const event = await Event.findOne({ _id: eventId });
     event.registeredVolunteers.push(userEmail);
     await event.save();
-    await Participate.findOneAndDelete({eventId, userEmail});
-    const user = await User.findOne({email: userEmail});
+    const user = await User.findOne({ email: userEmail });
     user.hours += hours;
     await user.save();
     res.status(200).json({
-      message: 'Applicant accepted'
+      message: "Applicant accepted",
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
+};
 
 const rejectApplicant = async (req, res) => {
-  const {eventId, userEmail} = req.body;
+  const { eventId, userEmail } = req.body;
   try {
-    await Participate.findByIdAndUpdate({eventId, userEmail}, {isRejected: true});
+    await Participate.findByIdAndUpdate(
+      { eventId, userEmail },
+      { isRejected: true }
+    );
     res.status(200).json({
-      message: 'Applicant rejected'
+      message: "Applicant rejected",
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
+};
 
 const getPendingAndRejectedEvents = async (req, res) => {
-  const {email} = req.body;
+  const { email } = req.body;
   try {
-    const events = await Participate.find({userEmail: email, isRejected: true});
-    const ev = await Participate.find({userEmail: email, isAccepted: false, isRejected: false});
+    const events = await Participate.find({
+      userEmail: email,
+      isRejected: true,
+    });
+    const ev = await Participate.find({
+      userEmail: email,
+      isAccepted: false,
+      isRejected: false,
+    });
     for (let i = 0; i < ev.length; i++) {
       events.push(ev[i]);
     }
     res.status(200).json({
-      message: 'Events fetched',
-      events
+      message: "Events fetched",
+      events,
     });
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
   }
-}
-
-
+};
 
 module.exports = {
   createEvent,
@@ -192,5 +204,5 @@ module.exports = {
   getApplicants,
   acceptApplicant,
   rejectApplicant,
-  getPendingAndRejectedEvents
+  getPendingAndRejectedEvents,
 };
