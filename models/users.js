@@ -7,11 +7,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             trim: true
         },
-        username: {
-            type: String,
-            trim: true,
-            unique: true
-        },
         email: {
             type: String,
             required: true,
@@ -27,48 +22,23 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true
         },
-        // profilePicture: {
-        //     type: String
-        // },
-        // role: {
-        //     type: String,
-        //     enum: ['ADMIN', 'USER']
-        // },
-        // loginProvider: {
-        //     type: String,
-        //     enum: ['CLOUD BIND', 'GOOGLE']
-        // },
-        // friends: {
-        //     type: [
-        //         {
-        //             _id: String,
-        //             name: String,
-        //             username: String
-        //         }
-        //     ]
-        // },
-        // friendRequests: {
-        //     type: [
-        //         {
-        //             _id: String,
-        //             name: String,
-        //             username: String
-        //         }
-        //     ]
-        // },
-        // friendRequestsSent: {
-        //     type: [
-        //         {
-        //             _id: String,
-        //             name: String,
-        //             username: String
-        //         }
-        //     ]
-        // },
-        // isVisible: {
-        //     type: Boolean,
-        //     default: false
-        // },
+        type: {
+            type: String,
+            enum: ['ADMIN', 'VOLUNTEER', 'INSTITUTION'],
+            required: true
+        },
+        profilePic: {
+            type: String,
+            default:""
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now
+        },
         isActivated: {
             type: Boolean,
             default: false

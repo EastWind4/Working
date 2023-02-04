@@ -7,7 +7,6 @@ const generateBearerToken = async (user) => {
       {
           id: user._id,
           name: user.name,
-          username: user.username,
           email: user.email,
           isActivated: user.isActivated
       },
@@ -21,7 +20,6 @@ const generateBearerToken = async (user) => {
       token: token,
       user: {
           id: user._id,
-          username: user.username,
           email: user.email,
       },
       expireAt: expireDate,

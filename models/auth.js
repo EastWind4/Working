@@ -7,9 +7,6 @@ const authSchema = new mongoose.Schema(
                 id: {
                     type: String
                 },
-                username: {
-                    type: String
-                },
                 email: {
                     type: String
                 }
