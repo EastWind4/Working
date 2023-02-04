@@ -14,7 +14,6 @@ import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 import SheetReader from "./components/SheetReader";
 import Admin from "./components/admin/admin";
-import SignUp from "./components/SignUp";
 import CertGenButton from "./components/CertificateGenerator";
 
 const App = () => {

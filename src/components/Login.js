@@ -118,7 +118,12 @@ export default function Login() {
               </Grid>
             </Grid>
 
-            <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              fullWidth
+            >
               Sign In
             </Button>
             <Grid container>
