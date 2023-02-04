@@ -35,7 +35,7 @@ export const VerifyLogin = async (email, password) => {
       return false;
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.response.data.message);
     return false;
   }
 };

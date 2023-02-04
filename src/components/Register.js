@@ -1,4 +1,3 @@
-import "../css/Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -261,5 +260,3 @@ const Register = () => {
     </>
   );
 };
-
-export default Register;
