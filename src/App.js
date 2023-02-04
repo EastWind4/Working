@@ -5,15 +5,13 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { useToggle } from "./context/ToggleButton";
 import Appbar from "./components/Appbar";
-import Landing from "./components/Landing";
 import TwoFactAuth from "./components/TwoFactAuth";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
-import Dashboard from "./components/Dashboard";
+import SignUp from "./components/SignUp";
 import Event from "./components/events";
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
-import ReachUs from "./components/Login";
 import Admin from "./components/admin/admin";
 
 const App = () => {
@@ -37,7 +35,7 @@ const App = () => {
       {open === true && <CustomAlert severity={severity} message={message} />}
       <Appbar />
       <Routes>
-        <Route path="/" element={<Landing />}></Route>
+        <Route path="/" element={<Login />}></Route>
         <Route path="login" element={<Login />} />
         <Route exact path="signup" element={<SignUp />} />
         <Route exact path="/signup/2fa" element={<TwoFactAuth />} />

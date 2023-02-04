@@ -121,11 +121,11 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Typography variant="body2">Forgot password?</Typography>
+                <Typography variant="body">Forgot password?</Typography>
               </Grid>
               <Grid item md>
                 {" "}
-                <Typography href="/" variant="body2">
+                <Typography onClick={() => navigate("/signup")} variant="body">
                   {"Don't have an account? Sign Up"}
                 </Typography>
               </Grid>

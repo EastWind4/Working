@@ -14,6 +14,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("expToken");
     localStorage.removeItem("isActivated");
+    localStorage.removeItem("email");
+    localStorage.removeItem("type");
+    localStorage.removeItem("profilePic");
+    localStorage.removeItem("hours");
   };
   return (
     <AuthContext.Provider
@@ -21,7 +25,6 @@ export const AuthProvider = ({ children }) => {
         auth,
         setAuth,
         login,
-
         logout,
       }}
     >

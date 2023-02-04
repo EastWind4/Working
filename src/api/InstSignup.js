@@ -11,18 +11,23 @@ export const InstSignup = async (name, password, email, type) => {
   try {
     const response = await axios.post(apiurl + "/signup/", data);
     if (response.data) {
-      console.log(response.data);
       const token = response.data.token;
       localStorage.setItem("token", token);
       const expToken = response.data.expireDate;
-      console.log(expToken);
       localStorage.setItem("expToken", expToken);
       const isActivated = response.data.isActivated;
       localStorage.setItem("isActivated", isActivated);
-      localStorage.setItem("user", response.data.username);
-      console.log(response.data);
+      const hours = response.data.hours;
+      localStorage.setItem("hours", hours);
+      const type = response.data.type;
+      localStorage.setItem("type", type);
+      const name = response.data.name;
+      localStorage.setItem("name", name);
+      const email = response.data.email;
+      localStorage.setItem("email", email);
+
       return {
-        userId: response.data.id,
+        name1: response.data.name,
         email1: email.replace(/(?<=.{2}).(?=.*@)/g, "*"),
         bool: true,
       };

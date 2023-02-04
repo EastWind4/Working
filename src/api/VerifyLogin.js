@@ -20,7 +20,9 @@ export const VerifyLogin = async (email, password) => {
       localStorage.setItem("isActivated", isActivated);
       localStorage.setItem("email", email);
       localStorage.setItem("type", response.data.type);
-      localStorage.setItem("url", response.data.profilePic);
+      localStorage.setItem("profilePic", response.data.profilePic);
+      const hours = response.data.hours;
+      localStorage.setItem("hours", hours);
       return {
         email: response.data.email,
         success: true,
