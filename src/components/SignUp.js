@@ -2,9 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -27,23 +24,6 @@ import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Stack from "@mui/material/Stack";
 import InstSignup from "../api/InstSignup";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 export default function SignUp() {
   const { showAlert } = useAlert();
@@ -71,7 +51,6 @@ export default function SignUp() {
   const [matchFocus, setMatchFocus] = useState(false);
   const [img, setImg] = useState(null);
   const [upload, setUpload] = useState(false);
-  const [validImg, setValidImg] = useState(false);
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -96,15 +75,9 @@ export default function SignUp() {
         img === null
     );
     if (validPwd && validMatch && validEmail && img !== null) {
-      const { userId, email1, bool } = await Signup(
-        name,
-        password,
-        email,
-        type,
-        img
-      );
+      const { bool } = await Signup(name, password, email, type, img);
       if (bool === true) {
-        navigate("/signup/2fa", { state: { userId, email1 } });
+        navigate("/signup/2fa");
       } else {
         showAlert("error", "User already exists");
       }
@@ -115,12 +88,12 @@ export default function SignUp() {
       type === "INSTITUTION" &&
       img === null
     ) {
-      const { userId, email1, bool } = await InstSignup(
-        name,
-        password,
-        email,
-        type
-      );
+      const { bool } = await InstSignup(name, password, email, type);
+      if (bool === true) {
+        navigate("/signup/2fa");
+      } else {
+        showAlert("error", "User already exists");
+      }
     } else {
       showAlert("error", "Please fill all the details");
     }
@@ -353,14 +326,19 @@ export default function SignUp() {
 
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Typography
+                onClick={() => {
+                  navigate("/login");
+                }}
+                variant="body"
+                margin={9}
+              >
                 Already have an account? Sign in
-              </Link>
+              </Typography>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 }

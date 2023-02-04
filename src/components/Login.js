@@ -27,8 +27,10 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email1, success, token, expToken, isActivated, naam, type } =
-      await VerifyLogin(email, pwd);
+    const { email1, success, token, expToken, isActivated } = await VerifyLogin(
+      email,
+      pwd
+    );
     if (success === true) {
       if (isActivated === false) {
         console.log("not activated");
@@ -121,11 +123,11 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Typography variant="body2">Forgot password?</Typography>
+                <Typography variant="body">Forgot password?</Typography>
               </Grid>
               <Grid item md>
                 {" "}
-                <Typography href="/" variant="body2">
+                <Typography onClick={() => navigate("/signup")} variant="body">
                   {"Don't have an account? Sign Up"}
                 </Typography>
               </Grid>
