@@ -15,6 +15,8 @@ import Event from "./components/events"
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 import ReachUs from "./components/Login";
+import Admin from "./components/admin/admin";
+
 const App = () => {
   const { on } = useToggle();
   const theme = createTheme({
@@ -43,6 +45,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
         <Route exact path="/events" element={<Event />} />
+        <Route exact path="/admin" element={<Admin />} />
       </Routes>
     </ThemeProvider>
   );
