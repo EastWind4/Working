@@ -9,7 +9,7 @@ import TwoFactAuth from "./components/TwoFactAuth";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SignUp from "./components/SignUp";
-import Event from "./components/events";
+import Event from "./components/Events";
 import { useAlert } from "./context/AlertProvider";
 import CustomAlert from "./components/CustomAlert";
 import SheetReader from "./components/SheetReader";

@@ -2,8 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -53,7 +51,6 @@ export default function SignUp() {
   const [matchFocus, setMatchFocus] = useState(false);
   const [img, setImg] = useState(null);
   const [upload, setUpload] = useState(false);
-  const [validImg, setValidImg] = useState(false);
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -78,15 +75,9 @@ export default function SignUp() {
         img === null
     );
     if (validPwd && validMatch && validEmail && img !== null) {
-      const { email1, name1, bool } = await Signup(
-        name,
-        password,
-        email,
-        type,
-        img
-      );
+      const { bool } = await Signup(name, password, email, type, img);
       if (bool === true) {
-        navigate("/signup/2fa", { state: { email1 } });
+        navigate("/signup/2fa");
       } else {
         showAlert("error", "User already exists");
       }
@@ -97,14 +88,9 @@ export default function SignUp() {
       type === "INSTITUTION" &&
       img === null
     ) {
-      const { email1, name1, bool } = await InstSignup(
-        name,
-        password,
-        email,
-        type
-      );
+      const { bool } = await InstSignup(name, password, email, type);
       if (bool === true) {
-        navigate("/signup/2fa", { state: { email1 } });
+        navigate("/signup/2fa");
       } else {
         showAlert("error", "User already exists");
       }
