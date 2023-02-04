@@ -38,6 +38,15 @@ const getAllVolAdmin = async (req, res) => {
   });
 };
 
+const getAllVolInsti = async (req, res) => {
+  const { to, email } = req.body;
+  const all = await Excel.find({ to: to, email: email });
+  res.status(200).json({
+    message: "All Excel Fetched",
+    excel: all,
+  });
+};
+
 const deleteVolAdmin = async (req, res) => {
   const { id } = req.body;
   try {
@@ -56,4 +65,5 @@ module.exports = {
   createVolAdmin,
   getAllVolAdmin,
   deleteVolAdmin,
+  getAllVolInsti
 };
