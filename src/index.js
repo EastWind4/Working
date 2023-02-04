@@ -7,7 +7,6 @@ import { ToggleProvider } from "./context/ToggleButton";
 import { AuthProvider } from "./context/AuthProvider";
 import { BrowserRouter } from "react-router-dom";
 import { AlertProvider } from "./context/AlertProvider";
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
