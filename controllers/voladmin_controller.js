@@ -2,17 +2,17 @@ const VolAdmin = require('../models/voladmin.js');
 const User = require('../models/users.js');
 
 const createVolAdmin = async (req, res) => {
-  const {name, email, data, fileName} = req.body;
+  const {name, email, sheetData, filename} = req.body;
   try {
     const volAdmin = await VolAdmin.create({
       name,
       email,
-      data,
-      fileName,
+      sheetData,
+      fileName: filename,
     });
     await volAdmin.save();
     const user = await User.findOne({email: email});
-    const count = Math.floor(data.length/10);
+    const count = Math.floor(sheetData.length/10);
     user.hours += count;
     await user.save();
     res.status(200).json({

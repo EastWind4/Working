@@ -10,10 +10,11 @@ const volExcelSchema = new Schema({
     type: String,
     required: true,
   },
-  data: {
-    type: Array,
-    required: true,
-  },
+  sheetData: [
+    {
+      type: Object,
+    },
+  ],
   fileName: {
     type: String,
     required: true,
