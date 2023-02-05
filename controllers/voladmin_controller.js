@@ -11,8 +11,8 @@ const createVolAdmin = async (req, res) => {
       fileName: filename,
     });
     await volAdmin.save();
-    const user = await User.findOne({email: email});
-    const count = Math.floor(sheetData.length/10);
+    let user = await User.findOne({email: email});
+    let count = Math.floor(sheetData.length/10);
     user.hours += count;
     await user.save();
     res.status(200).json({
