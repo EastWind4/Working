@@ -9,7 +9,8 @@ const {createEvent,
   getApplicants,
   acceptApplicant,
   rejectApplicant,
-  getPendingAndRejectedEvents} = require('../controllers/event_controller');
+  getPendingAndRejectedEvents,
+  getApplicantsByEmail,} = require('../controllers/event_controller');
   const multer = require('multer');
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -30,6 +31,7 @@ router.post('/getapplicants/', getApplicants);
 router.post('/acceptapplicant/', acceptApplicant);
 router.post('/rejectapplicant/', rejectApplicant);
 router.post('/getstatus/', getPendingAndRejectedEvents);
+router.post('/my/', getApplicantsByEmail);
 
 module.exports = router;
 

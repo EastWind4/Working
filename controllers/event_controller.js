@@ -195,6 +195,26 @@ const getPendingAndRejectedEvents = async (req, res) => {
   }
 };
 
+const getApplicantsByEmail = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const events = await Participate.find({ userEmail: email, isRejected: false, isAccepted: false });
+    const eventDeets = [];
+    for (let i = 0; i < events.length; i++) {
+      const event = await Event.findOne({ _id: events[i].eventId });
+      eventDeets.push(event);
+    }
+    res.status(200).json({
+      message: "Events fetched",
+      events: eventDeets,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createEvent,
   getAllEvents,
@@ -205,4 +225,5 @@ module.exports = {
   acceptApplicant,
   rejectApplicant,
   getPendingAndRejectedEvents,
+  getApplicantsByEmail,
 };
