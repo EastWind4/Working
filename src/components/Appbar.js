@@ -20,7 +20,7 @@ import SheetReader from "./SheetReader";
 import axios from "axios";
 
 function Appbar() {
-  let pages = [];
+  const pages = ["Profile", "Events"];
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { on, toggle } = useToggle();
@@ -32,20 +32,8 @@ function Appbar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const [excel, showExcel] = React.useState(false);
+  const [excel, showExcel] = React.useState(true);
   const type = localStorage.getItem("type");
-
-  if (type === "VOLUNTEER") {
-    pages = ["Profile", "Events"];
-    showExcel(true);
-  } else if (type === "INSTITUTION") {
-    pages = ["Profile", "Events"];
-    showExcel(false);
-  } else if (type === "ADMIN") {
-    pages = [];
-    showExcel(false);
-  }
 
   const fetchData = async (sheetData) => {
     const name = localStorage.getItem("name");
@@ -59,7 +47,6 @@ function Appbar() {
         filename: name + "_" + new Date(),
       }
     );
-    console.log(response);
   };
   return (
     <>
@@ -106,7 +93,6 @@ function Appbar() {
                       </Typography>
                     </MenuItem>
                   ))}
-                  {excel && <SheetReader submit={fetchData} />}
                 </Menu>
               </Box>
               <Avatar

@@ -24,7 +24,16 @@ function Profile() {
   };
   const [creator, setCreator] = React.useState([]);
   const [userEvent, setUserEvent] = React.useState([]);
-
+  const getCreatorEvents = async () => {
+    const email = localStorage.getItem("email");
+    const response = await axios.post(
+      process.env.REACT_APP_API_URL + "/events/getbyemail/",
+      { email }
+    );
+    setCreator(response.data.events);
+    console.log(response);
+    console.log(creator);
+  };
   const userEvents = async () => {
     const email = localStorage.getItem("email");
     const response = await axios.post(
@@ -38,16 +47,6 @@ function Profile() {
   const hours = localStorage.getItem("hours");
   const profilePic = localStorage.getItem("profilePic");
   React.useEffect(() => {
-    const getCreatorEvents = async () => {
-      const email = localStorage.getItem("email");
-      const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/events/getbyemail/",
-        { email }
-      );
-      setCreator(response.data.events);
-      console.log(response);
-      console.log(creator);
-    };
     let type = localStorage.getItem("type");
     if (type === "VOLUNTEER") userEvents();
     else getCreatorEvents();

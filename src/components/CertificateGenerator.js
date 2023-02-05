@@ -165,7 +165,7 @@ const CertGenButton = () => {
   const org = "Yasham Foundation";
   const issuedate = new Date();
   const qr =
-    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Aditi-Mohan";
+    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EastWind4.github.io";
   const hours = localStorage.getItem("hours");
   const componentRef = useRef();
   return (

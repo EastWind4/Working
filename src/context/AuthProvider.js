@@ -9,6 +9,9 @@ export const AuthProvider = ({ children }) => {
     setAuth({ user: "", token: null });
     localStorage.clear();
   };
+  window.onbeforeunload = () => {
+    localStorage.clear();
+  };
   return (
     <AuthContext.Provider
       value={{
