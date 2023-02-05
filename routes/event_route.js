@@ -28,7 +28,7 @@ router.post('/getbyemail/', getEventsByCreatorEmail);
 router.post('/delete/', deleteEvent);
 router.post('/apply/', applyForEvent);
 router.post('/getapplicants/', getApplicants);
-router.post('/acceptapplicant/', acceptApplicant);
+router.post('/haveit/', acceptApplicant);
 router.post('/rejectapplicant/', rejectApplicant);
 router.post('/getstatus/', getPendingAndRejectedEvents);
 router.post('/my/', getApplicantsByEmail);
