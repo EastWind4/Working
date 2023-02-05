@@ -36,6 +36,7 @@ function Admin() {
   const [institute, setInstitute] = React.useState("");
 
   const [rows, setRows] = React.useState([]);
+  const [inRows, setInRows] = React.useState([])
   const fetchData = async () => {
     const response = await axios.get(
       process.env.REACT_APP_API_URL + "/excel/vol/all/"
@@ -47,10 +48,32 @@ function Admin() {
     setRows(arr);
   };
 
+  const fetchInData = async () => {
+    const response = await axios.post(
+      process.env.REACT_APP_API_URL + "/excel/insti/all/",{to:"ADMIN"}
+    );
+    let arr = [];
+    for (let i = 0; i < response.data.excel.length; i++) {
+      arr.push(response.data.excel[i]);
+    }
+    setInRows(arr);
+  };
+
   const handleDelete = async (row) => {
     setRows(rows.filter((r) => r._id !== row._id));
     const response = await axios.post(
       process.env.REACT_APP_API_URL + "/excel/vol/delete/",
+      {
+        id: row._id,
+      }
+    );
+    console.log(response);
+  };
+
+  const handleInDelete = async (row) => {
+    setInRows(inRows.filter((r) => r._id !== row._id));
+    const response = await axios.post(
+      process.env.REACT_APP_API_URL + "/excel/insti/delete/",
       {
         id: row._id,
       }
@@ -75,6 +98,7 @@ function Admin() {
           name: institute,
           sheetData,
           to: "INSTITUTION",
+          filename: "Admin_"+ new Date()
         }
       );
       console.log(response.data);
@@ -83,6 +107,7 @@ function Admin() {
 
   React.useEffect(() => {
     fetchData();
+    fetchInData();
   }, []);
 
   const handleChange = (event) => {
@@ -95,12 +120,12 @@ function Admin() {
       direction="row"
       justifyContent="flex-start"
       alignItems="flex-start"
-      sx={{ marginTop: "20px", marginLeft: "20px", marginBottom: "30px" }}
+      sx={{ marginTop: "20px", padding: "20px", marginBottom: "30px" }}
       spacing={3}
     >
       <Grid item>
         <TableContainer component={Paper} elevation={3}>
-          <Table sx={{ maxWidth: 400 }} aria-label="simple table">
+          <Table sx={{ maxWidth: 400, minWidth:400}} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>
@@ -308,7 +333,7 @@ function Admin() {
       </Grid>
       <Grid item>
         <TableContainer component={Paper} elevation={3}>
-          <Table sx={{ maxWidth: 400 }} aria-label="simple table">
+          <Table sx={{ maxWidth: 400,minWidth:400 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>
@@ -323,7 +348,7 @@ function Admin() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {inRows.map((row) => (
                 <TableRow
                   key={row._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -348,7 +373,7 @@ function Admin() {
                       <Button
                         color="inherit"
                         onClick={() => {
-                          handleDelete(row);
+                          handleInDelete(row);
                         }}
                       >
                         <DeleteIcon />
