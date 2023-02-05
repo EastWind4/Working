@@ -25,6 +25,7 @@ import Stack from "@mui/material/Stack";
 import InstSignup from "../api/InstSignup";
 import logo from "../images/logo.svg";
 import image from "../images/Signin.jpg";
+import { motion } from "framer-motion";
 export default function SignUp() {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
@@ -66,14 +67,6 @@ export default function SignUp() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log(img);
-    console.log(
-      validPwd &&
-        validMatch &&
-        validEmail &&
-        type === "INSTITUTION" &&
-        img === null
-    );
     if (validPwd && validMatch && validEmail && img !== null) {
       const { bool } = await Signup(name, password, email, type, img);
       if (bool === true) {
@@ -99,7 +92,14 @@ export default function SignUp() {
     }
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      maxWidth="xs"
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, type: "tween" }}
+      exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
+    >
       <Box
         sx={{
           marginTop: 8,

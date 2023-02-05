@@ -7,13 +7,14 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import logo from "../images/logo.svg";
 import img from "../images/Signin.jpg";
-// import "../css/Register.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useRef, useState, useEffect } from "react";
 import { useAlert } from "../context/AlertProvider";
 import { VerifyLogin } from "../api/VerifyLogin";
 import TextField from "@mui/material/TextField";
+import { motion } from "framer-motion";
+
 export default function Login() {
   const { login } = useAuth();
   const { showAlert } = useAlert();
@@ -44,7 +45,14 @@ export default function Login() {
     }
   };
   return (
-    <Grid container component="main">
+    <Grid
+      container
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, type: "tween" }}
+      exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
+    >
       <Grid
         item
         xs={false}

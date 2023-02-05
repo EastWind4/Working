@@ -10,9 +10,9 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import coin from "../images/coin.png";
 import CardRequest from "./CardRequest";
-import Dashboard from './Dashboard';
-
+import Dashboard from "./Dashboard";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 function Profile() {
   const navigate = useNavigate();
   const adjWidth = {
@@ -33,13 +33,23 @@ function Profile() {
       padding={5}
       item={true}
       md={12}
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, type: "tween" }}
+      exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
     >
       <Grid item>
-        <Card elevation={3} sx={adjWidth}>
+        <Card
+          elevation={3}
+          sx={adjWidth}
+          component={motion.div}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 1.1 }}
+        >
           <CardHeader
             avatar={
               <Avatar
-                // src={localStorage.getItem("url")}
                 src={profilePic}
                 alt="profile picture"
                 imgProps={

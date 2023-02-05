@@ -15,6 +15,8 @@ import CustomAlert from "./components/CustomAlert";
 import SheetReader from "./components/SheetReader";
 import Admin from "./components/admin/admin";
 import CertificateGenerator from "./components/CertificateGenerator";
+import Error from "./components/Error";
+import Form from "./components/Form";
 const App = () => {
   const { on } = useToggle();
   const theme = createTheme({
@@ -36,16 +38,17 @@ const App = () => {
       {open === true && <CustomAlert severity={severity} message={message} />}
       <Appbar />
       <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="login" element={<Login />} />
+        <Route path="/" exact element={<Login />}></Route>
+        <Route path="login" exact element={<Login />} />
         <Route exact path="signup" element={<SignUp />} />
         <Route exact path="/signup/2fa" element={<TwoFactAuth />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" exact element={<Profile />} />
         <Route exact path="/events" element={<Event />} />
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
         <Route exact path="/claim" element={<CertificateGenerator />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route exact path="/form" element={<Form />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </ThemeProvider>
   );
