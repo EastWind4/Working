@@ -30,7 +30,6 @@ import Select from "@mui/material/Select";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import SheetReader from "../SheetReader";
-import Dashboard from "../Dashboard";
 
 function Admin() {
   const [institute, setInstitute] = React.useState("");
@@ -114,6 +113,12 @@ function Admin() {
   const handleChange = (event) => {
     setInstitute(event.target.value);
   };
+  const adjMT = {
+    marginTop: "-180px",
+    "@media (max-width:600px)": {
+      marginTop: "0px",
+    },
+  };
 
   return (
     <Grid
@@ -125,11 +130,16 @@ function Admin() {
       spacing={3}
     >
       <Grid item>
-        <TableContainer component={Paper} elevation={3}>
-          <Table
-            sx={{ maxWidth: 400, minWidth: 400 }}
-            aria-label="simple table"
-          >
+        <TableContainer
+          component={Paper}
+          elevation={3}
+          sx={{
+            maxWidth: 400,
+            maxHeight: 380,
+            overflowY: "scroll",
+          }}
+        >
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>
@@ -393,7 +403,7 @@ function Admin() {
           </Table>
         </TableContainer>
       </Grid>
-      <Grid item>
+      <Grid item sx={adjMT}>
         <Card>
           <CardContent>
             <Grid
@@ -459,7 +469,6 @@ function Admin() {
           </CardContent>
         </Card>
       </Grid>
-      <Dashboard />
     </Grid>
   );
 }

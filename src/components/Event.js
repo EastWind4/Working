@@ -2,11 +2,17 @@ import * as React from "react";
 import { Grid } from "@mui/material";
 import EventsCard from "./EventsCard";
 import GetEvent from "../api/GetEvent";
+import Dashboard from "./Dashboard";
+import { useNavigate } from "react-router-dom";
 import { useAlert } from "../context/AlertProvider";
 export default function Event() {
+  const navigate = useNavigate();
   const [events, setEvents] = React.useState([]);
   const { showAlert } = useAlert();
   React.useEffect(() => {
+    if (localStorage.getItem("type") === "INSTITUTION") {
+      navigate("/form");
+    }
     GetEvent().then((response) => {
       if (response) {
         setEvents(response);
@@ -14,7 +20,7 @@ export default function Event() {
         showAlert("error", response.message);
       }
     });
-  }, [showAlert]);
+  }, [showAlert, navigate]);
   return (
     <Grid container direction="row" justifyContent="center" spacing={3}>
       {events.map((event) => (
@@ -36,6 +42,7 @@ export default function Event() {
           />
         </Grid>
       ))}
+      <Dashboard />
     </Grid>
   );
 }

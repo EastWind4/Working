@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
-function CardRequest({eventTitle, creatorEmail, isRejected}) {
+function CardRequest({eventTitle, creatorEmail, date, totalParticipants,}) {
   return (
    <>
-   <Card sx={{ minWidth: 275, backgroundColor:'#d18214'}} elevation={3}>
+   <Card sx={{ minWidth: 275, backgroundColor:'orangered'}} elevation={3}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {creatorEmail}
@@ -19,8 +19,9 @@ function CardRequest({eventTitle, creatorEmail, isRejected}) {
           {eventTitle}
         </Typography>
         <Typography variant="body2">
-          Pending
+          {date}
           <br />
+          Total Volunteers Registered: {totalParticipants}
         </Typography>
       </CardContent>
     </Card>

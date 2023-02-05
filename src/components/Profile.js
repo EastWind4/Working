@@ -13,6 +13,7 @@ import CardRequest from "./CardRequest";
 import Dashboard from "./Dashboard";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
 function Profile() {
   const navigate = useNavigate();
   const adjWidth = {
@@ -21,8 +22,36 @@ function Profile() {
       width: "80%",
     },
   };
+  const [creator, setCreator] = React.useState([]);
+  const [userEvent, setUserEvent] = React.useState([]);
+
+  const userEvents = async () => {
+    const email = localStorage.getItem("email");
+    const response = await axios.post(
+      process.env.REACT_APP_API_URL + "/events/my/",
+      { email }
+    );
+    setUserEvent(response.data.events);
+  };
+  const username = localStorage.getItem("name");
+  const type = localStorage.getItem("type");
   const hours = localStorage.getItem("hours");
   const profilePic = localStorage.getItem("profilePic");
+  React.useEffect(() => {
+    const getCreatorEvents = async () => {
+      const email = localStorage.getItem("email");
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL + "/events/getbyemail/",
+        { email }
+      );
+      setCreator(response.data.events);
+      console.log(response);
+      console.log(creator);
+    };
+    let type = localStorage.getItem("type");
+    if (type === "VOLUNTEER") userEvents();
+    else getCreatorEvents();
+  }, []);
   return (
     <Grid
       container
@@ -44,7 +73,7 @@ function Profile() {
           elevation={3}
           sx={adjWidth}
           component={motion.div}
-          whileHover={{ scale: 1.2 }}
+          whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 1.1 }}
         >
           <CardHeader
@@ -52,13 +81,6 @@ function Profile() {
               <Avatar
                 src={profilePic}
                 alt="profile picture"
-                imgProps={
-                  {
-                    // src: localStorage.getItem("url"),
-                    // src: "https://res.cloudinary.com/dqpspujbg/image/upload/v1675519017/test/uploads/yashb%40gmail.com.jpg",
-                    // alt: "profile picture",
-                  }
-                }
                 variant="square"
                 sx={{ width: "90px", height: "100px" }}
               ></Avatar>
@@ -69,9 +91,9 @@ function Profile() {
               </IconButton>
             }
             titleTypographyProps={{ variant: "h4" }}
-            title="Sakshi Pandey"
+            title={username}
             subheaderTypographyProps={{ variant: "h6" }}
-            subheader="Volunteer"
+            subheader={type}
           />
           <CardMedia
             component="img"
@@ -84,34 +106,101 @@ function Profile() {
         </Card>
       </Grid>
       <Grid item>
-        <Card elevation={3} sx={{ width: "300px", height: "200px" }}>
-          <CardHeader
-            titleTypographyProps={{ variant: "h5" }}
-            title="Number of Hours"
-            subheaderTypographyProps={{ variant: "h3" }}
-            subheader={hours}
-            avatar={<Avatar src={coin} sx={{ marginBottom: "-30px" }}></Avatar>}
-          />
-          <Button
-            variant="contained"
-            sx={{ marginLeft: "35%", marginTop: "15px" }}
-            disabled={hours % 5 === 0 && hours !== "0" ? false : true}
-            onClick={() => {
-              navigate("/claim");
-            }}
-          >
-            Claim
-          </Button>
-        </Card>
+        {type === "VOLUNTEER" && (
+          <Card elevation={3} sx={{ width: "300px", height: "200px" }}>
+            <CardHeader
+              titleTypographyProps={{ variant: "h5" }}
+              title="Number of Hours"
+              subheaderTypographyProps={{ variant: "h3" }}
+              subheader={hours}
+              avatar={
+                <Avatar src={coin} sx={{ marginBottom: "-30px" }}></Avatar>
+              }
+            />
+            <Button
+              variant="contained"
+              sx={{ marginLeft: "35%", marginTop: "15px" }}
+              disabled={hours % 5 === 0 && hours !== "0" ? false : true}
+              onClick={() => {
+                navigate("/claim");
+              }}
+            >
+              Claim
+            </Button>
+          </Card>
+        )}
+
+        {type === "INSTITUTION" && (
+          <Card elevation={3} sx={{ width: "400px", height: "200px" }}>
+            <CardHeader
+              titleTypographyProps={{ variant: "h5" }}
+              title="NUMBER OF EVENTS CREATED"
+              subheaderTypographyProps={{
+                variant: "h3",
+                textAlign: "center",
+                marginTop: "20px",
+              }}
+              subheader={creator.length}
+            />
+          </Card>
+        )}
       </Grid>
       <Grid item>
-        <Typography>Status</Typography>
-        <br />
-        <CardRequest
-          eventTitle={"Teaching assistant"}
-          isRejected={false}
-          creatorEmail={"yashbrahmbhatt"}
-        />
+        {type === "INSTITUTION" && (
+          <>
+            <Typography>PREVIOUSLY CREATED EVENTS</Typography>
+            <br />
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={3}
+              padding={1}
+            >
+              {creator.map((cr) => {
+                return (
+                  <Grid item key={cr._id}>
+                    <CardRequest
+                      eventTitle={cr.description}
+                      date={cr.date}
+                      creatorEmail={cr.title}
+                      totalParticipants={cr.registeredVolunteers.length}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </>
+        )}
+
+        {type === "VOLUNTEER" && (
+          <>
+            <Typography>Applied Events:</Typography>
+            <br />
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={3}
+              padding={3}
+            >
+              {userEvent.map((cr) => {
+                return (
+                  <Grid item key={cr._id}>
+                    <CardRequest
+                      eventTitle={cr.description}
+                      date={cr.date}
+                      creatorEmail={cr.title}
+                      totalParticipants={cr.registeredVolunteers.length}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </>
+        )}
       </Grid>
       <br />
       <Dashboard />

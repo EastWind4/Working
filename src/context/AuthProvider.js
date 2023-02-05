@@ -7,14 +7,7 @@ export const AuthProvider = ({ children }) => {
   };
   const logout = () => {
     setAuth({ user: "", token: null });
-    localStorage.removeItem("name");
-    localStorage.removeItem("token");
-    localStorage.removeItem("expToken");
-    localStorage.removeItem("isActivated");
-    localStorage.removeItem("email");
-    localStorage.removeItem("type");
-    localStorage.removeItem("profilePic");
-    localStorage.removeItem("hours");
+    localStorage.clear();
   };
   return (
     <AuthContext.Provider

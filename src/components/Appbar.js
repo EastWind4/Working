@@ -16,9 +16,11 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import logo from "../images/logo.png";
+import SheetReader from "./SheetReader";
+import axios from "axios";
 
-let pages = [];
 function Appbar() {
+  let pages = [];
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { on, toggle } = useToggle();
@@ -31,13 +33,34 @@ function Appbar() {
     setAnchorElNav(null);
   };
 
+  const [excel, showExcel] = React.useState(false);
   const type = localStorage.getItem("type");
-  if (type === "INSTITUTION" || type === "VOLUNTEER") {
-    pages = ["Events", "Profile"];
+
+  if (type === "VOLUNTEER") {
+    pages = ["Profile", "Events"];
+    showExcel(true);
+  } else if (type === "INSTITUTION") {
+    pages = ["Profile", "Events"];
+    showExcel(false);
   } else if (type === "ADMIN") {
     pages = [];
+    showExcel(false);
   }
 
+  const fetchData = async (sheetData) => {
+    const name = localStorage.getItem("name");
+    const email = localStorage.getItem("email");
+    const response = await axios.post(
+      process.env.REACT_APP_API_URL + "/excel/vol/create/",
+      {
+        name,
+        email,
+        sheetData,
+        filename: name + "_" + new Date(),
+      }
+    );
+    console.log(response);
+  };
   return (
     <>
       <AppBar position="sticky">
@@ -83,6 +106,7 @@ function Appbar() {
                       </Typography>
                     </MenuItem>
                   ))}
+                  {excel && <SheetReader submit={fetchData} />}
                 </Menu>
               </Box>
               <Avatar
@@ -100,11 +124,19 @@ function Appbar() {
                   <Button
                     key={page}
                     onClick={() => navigate(`/${page.toLowerCase()}`)}
-                    sx={{ my: 2, color: "inherit", display: "block" }}
+                    sx={{
+                      my: 2,
+                      color: "inherit",
+                      backgroundColor: "inherit",
+                      display: "block",
+                    }}
                   >
                     {page}
                   </Button>
                 ))}
+                <Typography sx={{ marginTop: "15px" }}>
+                  {excel && <SheetReader submit={fetchData} />}
+                </Typography>
               </Box>
               {localStorage.getItem("isActivated") !== "true" ? (
                 <Button
