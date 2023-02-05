@@ -15,6 +15,7 @@ import CustomAlert from "./components/CustomAlert";
 import SheetReader from "./components/SheetReader";
 import Admin from "./components/admin/admin";
 import CertificateGenerator from "./components/CertificateGenerator";
+import Institute from "./components/institute/Institute";
 import Error from "./components/Error";
 import Form from "./components/Form";
 const App = () => {
@@ -47,8 +48,7 @@ const App = () => {
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
         <Route exact path="/claim" element={<CertificateGenerator />} />
-        <Route exact path="/form" element={<Form />} />
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </ThemeProvider>
   );
