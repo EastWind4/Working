@@ -7,10 +7,10 @@ const {createEvent,
   deleteEvent,
   applyForEvent,
   getApplicants,
-  acceptApplicant,
   rejectApplicant,
   getPendingAndRejectedEvents,
-  getApplicantsByEmail,} = require('../controllers/event_controller');
+  getApplicantsByEmail,
+approveUser} = require('../controllers/event_controller');
   const multer = require('multer');
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -28,10 +28,11 @@ router.post('/getbyemail/', getEventsByCreatorEmail);
 router.post('/delete/', deleteEvent);
 router.post('/apply/', applyForEvent);
 router.post('/getapplicants/', getApplicants);
-router.post('/haveit/', acceptApplicant);
+// router.post('/haveit/', acceptApplicant);
 router.post('/rejectapplicant/', rejectApplicant);
 router.post('/getstatus/', getPendingAndRejectedEvents);
 router.post('/my/', getApplicantsByEmail);
+router.post('/approve/', approveUser);
 
 module.exports = router;
 

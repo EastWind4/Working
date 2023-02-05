@@ -160,6 +160,29 @@ const acceptApplicant = async (req, res) => {
   }
 };
 
+const approveUser = async (req, res) => {
+  const { eventId, userEmail, hours } = req.body;
+  try {
+    let participat = await Participate.findOne({
+      eventId,
+      userEmail,
+    });
+    participat.isApproved = true;
+    await participat.save();
+    let user = await User.findOne({ email: userEmail });
+    const temp = parseInt(user.hours)
+    user.hours = parseInt(hours)+temp;
+    await user.save();
+    res.status(200).json({
+      message: "User approved",
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
 const rejectApplicant = async (req, res) => {
   const { eventId, userEmail } = req.body;
   try {
@@ -240,4 +263,5 @@ module.exports = {
   rejectApplicant,
   getPendingAndRejectedEvents,
   getApplicantsByEmail,
+  approveUser,
 };
