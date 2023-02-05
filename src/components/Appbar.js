@@ -120,9 +120,9 @@ function Appbar() {
                     {page}
                   </Button>
                 ))}
-                <Typography sx={{ marginTop: "15px" }}>
+                <span style={{ marginTop: "15px" }}>
                   {excel && <SheetReader submit={fetchData} />}
-                </Typography>
+                </span>
               </Box>
               {localStorage.getItem("isActivated") !== "true" ? (
                 <Button
