@@ -30,7 +30,6 @@ import Select from "@mui/material/Select";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import SheetReader from "../SheetReader";
-import Dashboard from "../Dashboard";
 
 function Admin() {
   const [institute, setInstitute] = React.useState("");
@@ -452,7 +451,6 @@ function Admin() {
           </CardContent>
         </Card>
       </Grid>
-      <Dashboard />
     </Grid>
   );
 }

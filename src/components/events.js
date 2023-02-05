@@ -2,6 +2,8 @@ import * as React from "react";
 import { Grid } from "@mui/material";
 import EventsCard from "./EventsCard";
 import GetEvent from "../api/GetEvent";
+import Dashboard from "./Dashboard";
+
 export default function Event() {
   const [events, setEvents] = React.useState([]);
 
@@ -33,6 +35,7 @@ export default function Event() {
           />
         </Grid>
       ))}
+      <Dashboard />
     </Grid>
   );
 }
