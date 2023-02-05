@@ -12,13 +12,15 @@ const SendOtp = async (email, token) => {
       }
     );
     if (response.status === 200) {
-      console.log(response.data.message);
-      return true;
+      return {
+        message: response.data.message,
+        success: true,
+      };
     } else {
-      return false;
+      return { message: response.data.message, success: false };
     }
   } catch (err) {
-    return false;
+    return { message: err.response.data.message, success: false };
   }
 };
 

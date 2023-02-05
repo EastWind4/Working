@@ -9,17 +9,13 @@ const ApplyEvent = async (eventId, email, creatorEmail, name, title) => {
       name: name,
       title: title,
     });
-    console.log(eventId, email, creatorEmail, name, title);
-    console.log(response.data);
     if (response.status === 200) {
-      console.log(response.data.message);
       return { success: true, message: response.data.message };
     } else {
-      return false;
+      return { success: false, message: response.data.message };
     }
   } catch (err) {
-    console.log(err);
-    return false;
+    return { success: false, message: err.response.data.message };
   }
 };
 export default ApplyEvent;

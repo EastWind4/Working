@@ -21,16 +21,13 @@ const CreateEvent = async (
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response.data);
     if (response.status === 200) {
-      console.log(response.data.message);
       return { success: true, message: response.data.message };
     } else {
-      return false;
+      return { success: false, message: response.data.message };
     }
   } catch (err) {
-    console.log(err);
-    return false;
+    return { success: false, message: err.response.data.message };
   }
 };
 export default CreateEvent;

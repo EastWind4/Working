@@ -7,7 +7,6 @@ const VerifyOtp = async (email, otp) => {
       otp: otp,
     };
     const token = localStorage.getItem("token");
-    console.log(email, otp);
     const response = await axios.post(apiurl + "/signup/verify/", data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -17,12 +16,10 @@ const VerifyOtp = async (email, otp) => {
       localStorage.setItem("isActivated", true);
       return true;
     } else {
-      console.log(response);
-      return false;
+      return { message: response.data.message, success: false };
     }
   } catch (err) {
-    console.log(err);
-    return false;
+    return { message: err.response.data.message, success: false };
   }
 };
 export default VerifyOtp;

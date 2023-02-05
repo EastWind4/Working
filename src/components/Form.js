@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Grid,
-  TextField,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Grid, TextField, Button, Card, CardContent } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { useAlert } from "../context/AlertProvider";
@@ -19,14 +12,14 @@ function Form() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [creatorEmail, setCreatorEmail] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleForm = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (!img) {
       showAlert("error", "Please select an image");
       return;
     } else {
-      console.log(img);
       const response = await CreateEvent(
         creatorEmail,
         title,
@@ -35,7 +28,7 @@ function Form() {
         location,
         img
       );
-
+      setLoading(false);
       if (response.success) {
         showAlert("success", response.message);
       } else {

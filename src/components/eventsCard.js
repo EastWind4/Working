@@ -27,7 +27,6 @@ export default function EventsCard({
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
     const eventId = _id;
-    console.log(eventId, email, creatorEmail, name, title);
     const response = await ApplyEvent(
       eventId,
       email,

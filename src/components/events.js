@@ -2,16 +2,19 @@ import * as React from "react";
 import { Grid } from "@mui/material";
 import EventsCard from "./EventsCard";
 import GetEvent from "../api/GetEvent";
+import { useAlert } from "../context/AlertProvider";
 export default function Event() {
   const [events, setEvents] = React.useState([]);
-
+  const { showAlert } = useAlert();
   React.useEffect(() => {
     GetEvent().then((response) => {
       if (response) {
         setEvents(response);
+      } else {
+        showAlert("error", response.message);
       }
     });
-  }, []);
+  }, [showAlert]);
   return (
     <Grid container direction="row" justifyContent="center" spacing={3}>
       {events.map((event) => (

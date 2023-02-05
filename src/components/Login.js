@@ -14,8 +14,10 @@ import { useAlert } from "../context/AlertProvider";
 import { VerifyLogin } from "../api/VerifyLogin";
 import TextField from "@mui/material/TextField";
 import { motion } from "framer-motion";
+import { CircularProgress } from "@mui/material";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const { showAlert } = useAlert();
   const navigate = useNavigate();
@@ -28,20 +30,34 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email1, success, token, expToken, isActivated, name, type } =
-      await VerifyLogin(email, pwd);
+    setLoading(true);
+    const {
+      email1,
+      success,
+      token,
+      expToken,
+      isActivated,
+      name,
+      type,
+      message,
+    } = await VerifyLogin(email, pwd);
+    setLoading(false);
     if (success === true) {
       if (isActivated === false) {
         console.log("not activated");
         navigate("/signup/2fa", { state: { email } });
       } else {
-        console.log("activated");
         login(email1, token, expToken);
-        if (type === "ADMIN") navigate("/admin");
-        else navigate("/profile");
+        if (type === "ADMIN") {
+          showAlert("success", `Welcome ${name}`);
+          navigate("/admin");
+        } else {
+          showAlert("success", `Welcome ${name}`);
+          navigate("/profile");
+        }
       }
     } else {
-      showAlert("error", "Invalid username or password");
+      showAlert("error", message);
     }
   };
   return (
@@ -124,7 +140,6 @@ export default function Login() {
                 />
               </Grid>
             </Grid>
-
             <Button
               type="submit"
               variant="contained"
@@ -133,6 +148,9 @@ export default function Login() {
             >
               Sign In
             </Button>
+            {loading && (
+              <CircularProgress sx={{ color: "white", marginLeft: "45%" }} />
+            )}
             <Grid container>
               <Grid item xs>
                 <Typography variant="body">Forgot password?</Typography>

@@ -47,8 +47,10 @@ const App = () => {
         <Route exact path="/events" element={<Event />} />
         <Route exact path="/sheet" element={<SheetReader />} />
         <Route exact path="/admin" element={<Admin />} />
+        <Route exact path="/institute" element={<Institute />} />
+        <Route exact path="/form" element={<Form />} />
         <Route exact path="/claim" element={<CertificateGenerator />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </ThemeProvider>
   );

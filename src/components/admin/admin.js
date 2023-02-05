@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -36,7 +36,7 @@ function Admin() {
   const [institute, setInstitute] = React.useState("");
 
   const [rows, setRows] = React.useState([]);
-  const [inRows, setInRows] = React.useState([])
+  const [inRows, setInRows] = React.useState([]);
   const fetchData = async () => {
     const response = await axios.get(
       process.env.REACT_APP_API_URL + "/excel/vol/all/"
@@ -50,7 +50,8 @@ function Admin() {
 
   const fetchInData = async () => {
     const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/excel/insti/all/",{to:"ADMIN"}
+      process.env.REACT_APP_API_URL + "/excel/insti/all/",
+      { to: "ADMIN" }
     );
     let arr = [];
     for (let i = 0; i < response.data.excel.length; i++) {
@@ -98,7 +99,7 @@ function Admin() {
           name: institute,
           sheetData,
           to: "INSTITUTION",
-          filename: "Admin_"+ new Date()
+          filename: "Admin_" + new Date(),
         }
       );
       console.log(response.data);
@@ -125,7 +126,10 @@ function Admin() {
     >
       <Grid item>
         <TableContainer component={Paper} elevation={3}>
-          <Table sx={{ maxWidth: 400, minWidth:400}} aria-label="simple table">
+          <Table
+            sx={{ maxWidth: 400, minWidth: 400 }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>
@@ -333,7 +337,10 @@ function Admin() {
       </Grid>
       <Grid item>
         <TableContainer component={Paper} elevation={3}>
-          <Table sx={{ maxWidth: 400,minWidth:400 }} aria-label="simple table">
+          <Table
+            sx={{ maxWidth: 400, minWidth: 400 }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>

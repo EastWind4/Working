@@ -32,11 +32,10 @@ export const InstSignup = async (name, password, email, type) => {
         bool: true,
       };
     } else {
-      console.log(response);
+      return { message: response.data.message, bool: false };
     }
   } catch (err) {
-    console.log(err);
-    return { error: "UserID already exists!" };
+    return { message: err.response.data.message, bool: false };
   }
 };
 

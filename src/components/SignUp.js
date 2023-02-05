@@ -26,6 +26,8 @@ import InstSignup from "../api/InstSignup";
 import logo from "../images/logo.svg";
 import image from "../images/Signin.jpg";
 import { motion } from "framer-motion";
+import { CircularProgress } from "@mui/material";
+
 export default function SignUp() {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
@@ -52,6 +54,7 @@ export default function SignUp() {
   const [matchFocus, setMatchFocus] = useState(false);
   const [img, setImg] = useState(null);
   const [upload, setUpload] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -68,11 +71,14 @@ export default function SignUp() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (validPwd && validMatch && validEmail && img !== null) {
-      const { bool } = await Signup(name, password, email, type, img);
+      setLoading(true);
+      const { bool, message } = await Signup(name, password, email, type, img);
+      setLoading(false);
       if (bool === true) {
+        showAlert("success", message);
         navigate("/signup/2fa");
       } else {
-        showAlert("error", "User already exists");
+        showAlert("error", message);
       }
     } else if (
       validPwd &&
@@ -81,11 +87,11 @@ export default function SignUp() {
       type === "INSTITUTION" &&
       img === null
     ) {
-      const { bool } = await InstSignup(name, password, email, type);
+      const { message, bool } = await InstSignup(name, password, email, type);
       if (bool === true) {
         navigate("/signup/2fa");
       } else {
-        showAlert("error", "User already exists");
+        showAlert("error", message);
       }
     } else {
       showAlert("error", "Please fill all the details");
@@ -325,14 +331,8 @@ export default function SignUp() {
                   </Stack>{" "}
                 </Grid>
               )}
-
-              {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid> */}
             </Grid>
+            {loading && <CircularProgress sx={{ marginLeft: "45%" }} />}
             <Button
               type="submit"
               fullWidth

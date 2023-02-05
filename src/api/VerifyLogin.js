@@ -8,7 +8,6 @@ export const VerifyLogin = async (email, password) => {
   try {
     const response = await axios.post(apiurl + "/login/", data);
     if (response.data) {
-      console.log(response.data);
       const name = response.data.name;
       localStorage.setItem("name", name);
       const token = response.data.token;
@@ -22,7 +21,6 @@ export const VerifyLogin = async (email, password) => {
       localStorage.setItem("profilePic", response.data.profilePic);
       const hours = response.data.hours;
       localStorage.setItem("hours", hours);
-      console.log(localStorage);
       return {
         email: response.data.email,
         success: true,
@@ -33,12 +31,10 @@ export const VerifyLogin = async (email, password) => {
         type: response.data.type,
       };
     } else {
-      console.log("false");
-      return false;
+      return { message: response.data.message, success: false };
     }
   } catch (err) {
-    console.log(err.response.data.message);
-    return false;
+    return { message: err.response.data.message, success: false };
   }
 };
 

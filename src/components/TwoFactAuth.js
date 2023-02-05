@@ -11,21 +11,20 @@ import { CircularProgress } from "@mui/material";
 function TwoFactAuth() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
-  // const email1 = localStorage.getItem("email");
-  const email1 = "zatakiavashisth@gmail.com";
+  const email1 = localStorage.getItem("email");
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const handleOtp = async () => {
     setLoading(true);
     const email = localStorage.getItem("email");
-    const otp = await SendOtp(email, token);
+    const { success, message } = await SendOtp(email, token);
     setLoading(false);
     setTime(60);
-    if (otp) {
+    if (success) {
       showAlert("success", "OTP sent successfully!");
     } else {
       setTime(0);
-      showAlert("error", "OTP not sent!");
+      showAlert("error", message);
     }
   };
   const verifyOtp = async () => {
@@ -36,13 +35,13 @@ function TwoFactAuth() {
       otp += otp1.value;
     });
     const email = localStorage.getItem("email");
-    const success = await VerifyOtp(email, otp, token);
+    const { success, message } = await VerifyOtp(email, otp, token);
     setLoading(false);
     if (success === true) {
-      console.log("otp verified");
+      showAlert("success", "OTP verified successfully!");
       navigate("/profile");
     } else {
-      showAlert("error", "OTP not verified!");
+      showAlert("error", message);
     }
   };
 
@@ -60,7 +59,6 @@ function TwoFactAuth() {
             e.target.previousElementSibling.focus();
             e.target.disabled = true;
           } else if (e.target.previousElementSibling === null) {
-            console.log("error");
           } else {
             e.target.previousElementSibling.previousElementSibling.focus();
           }
@@ -123,7 +121,7 @@ function TwoFactAuth() {
                 justifyContent: "center",
               }}
             >
-                {loading && <CircularProgress />}
+              {loading && <CircularProgress />}
               <br />
             </Typography>
           )}
