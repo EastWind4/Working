@@ -93,6 +93,10 @@ const applyForEvent = async (req, res) => {
     });
     return;
   }
+  const event = await Event.findOne({ _id: eventId });
+  event.registeredVolunteers.push(userEmail);
+  await event.save();
+  z̧;
   try {
     const apply = await Participate.create({
       eventId,
@@ -134,11 +138,8 @@ const getApplicants = async (req, res) => {
 };
 
 const acceptApplicant = async (req, res) => {
-  const { eventId, userEmail, hours } = req.body;
+  const { userEmail, hours } = req.body;
   try {
-    const event = await Event.findOne({ _id: eventId });
-    event.registeredVolunteers.push(userEmail);
-    await event.save();
     const user = await User.findOne({ email: userEmail });
     user.hours += hours;
     await user.save();
@@ -197,8 +198,14 @@ const getPendingAndRejectedEvents = async (req, res) => {
 
 const getApplicantsByEmail = async (req, res) => {
   const { email } = req.body;
+  console.log(email);
   try {
-    const events = await Participate.find({ userEmail: email, isRejected: false, isAccepted: false });
+    const events = await Participate.find({
+      userEmail: email,
+      isRejected: false,
+      isApproved: false,
+    });
+    console.log(events);
     const eventDeets = [];
     for (let i = 0; i < events.length; i++) {
       const event = await Event.findOne({ _id: events[i].eventId });
