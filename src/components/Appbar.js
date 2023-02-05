@@ -20,7 +20,6 @@ import SheetReader from "./SheetReader";
 import axios from "axios";
 
 function Appbar() {
-  const pages = ["Profile", "Events"];
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { on, toggle } = useToggle();
@@ -34,7 +33,12 @@ function Appbar() {
   };
   const [excel, showExcel] = React.useState(true);
   const type = localStorage.getItem("type");
-
+  let pages;
+  if (type === "VOLUNTEER" || type === "INSTITUTION") {
+    pages = ["Profile", "Events"];
+  } else {
+    pages = [];
+  }
   const fetchData = async (sheetData) => {
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
