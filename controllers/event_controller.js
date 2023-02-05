@@ -138,8 +138,14 @@ const getApplicants = async (req, res) => {
 };
 
 const acceptApplicant = async (req, res) => {
-  const { userEmail, hours } = req.body;
+  const { eventId, userEmail, hours } = req.body;
   try {
+    const participate = await Participate.findOne({
+      eventId,
+      userEmail,
+    });
+    participate.isAccepted = true;
+    await participate.save();
     const user = await User.findOne({ email: userEmail });
     user.hours += hours;
     await user.save();
