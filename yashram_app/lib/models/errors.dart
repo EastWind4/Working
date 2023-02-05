@@ -1,7 +1,14 @@
-enum FieldError { Empty, Invalid, Incorrect }
+enum FieldError { None, Empty, Invalid, Incorrect }
 
 extension FieldErrorDesc on FieldError {
+  static const Map<FieldError, bool> _err = {
+    FieldError.None: false,
+    FieldError.Empty: true,
+    FieldError.Invalid: true,
+    FieldError.Incorrect: true,
+  };
   static const Map<FieldError, String> _map = {
+    FieldError.None: "",
     FieldError.Empty: "field is empty",
     FieldError.Invalid: "field is invalid",
     FieldError.Incorrect: "field is incorrect",

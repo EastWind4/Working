@@ -50,8 +50,9 @@ class _CusTextFieldState extends State<CusTextField>
 
   @override
   Widget build(BuildContext context) {
-    Color respColor = widget.err == null ? Colors.blueGrey : Colors.redAccent;
-    if (widget.err != null && animate) {
+    Color respColor =
+        widget.err == FieldError.None ? Colors.blueGrey : Colors.redAccent;
+    if (widget.err != FieldError.None && animate) {
       shake();
     }
 
@@ -72,7 +73,7 @@ class _CusTextFieldState extends State<CusTextField>
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
                         width: 3,
-                        color: widget.err == null
+                        color: widget.err == FieldError.None
                             ? Colors.blueGrey
                             : Colors.redAccent,
                       )),
@@ -108,7 +109,7 @@ class _CusTextFieldState extends State<CusTextField>
             ),
           ),
         ),
-        if (widget.err != null) ...[
+        if (widget.err != FieldError.None) ...[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
