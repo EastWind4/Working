@@ -13,7 +13,8 @@ const createVolAdmin = async (req, res) => {
     await volAdmin.save();
     let user = await User.findOne({email: email});
     let count = Math.floor(sheetData.length/10);
-    user.hours += count;
+    let temp = parseInt(user.hours)
+    user.hours = count+temp;
     await user.save();
     res.status(200).json({
       message: 'Excel Submitted',

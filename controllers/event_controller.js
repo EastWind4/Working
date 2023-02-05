@@ -140,14 +140,15 @@ const getApplicants = async (req, res) => {
 const acceptApplicant = async (req, res) => {
   const { eventId, userEmail, hours } = req.body;
   try {
+    console.log(eventId, userEmail, hours);
     let participat = await Participate.findOne({
       eventId,
       userEmail,
     });
-    participat.isAccepted = true;
+    participat.isApproved = true;
     await participat.save();
     let user = await User.findOne({ email: userEmail });
-    user.hours += hours;
+    user.hours += parseInt(hours);
     await user.save();
     res.status(200).json({
       message: "Applicant accepted",
